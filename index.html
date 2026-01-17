@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Me Maybe</title>
+    
+    <!-- Fonts: Spline Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300..700&display=swap" rel="stylesheet">
+
+    <!-- Swiper CSS --><!--#BF9DE2-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        :root {
+            --bg-color: #FFFFF1;
+            --text-color: #110F0F;
+            --card-top-bg: #e6e6e6; 
+            --card-bottom-bg: #efc6ed; 
+            --btn-color: #C2FF96;
+            --footer-bg: #2f3726;
+            --footer-text: #fff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Spline Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .nav-brand {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 0px;
+            color: var(--text-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 400;
+            font-size: 1rem;
+            text-transform: capitalize;
+            letter-spacing: 0px;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover { opacity: 0.6; }
+
+        /* --- Carousel Section --- */
+        .carousel-section {
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 500px;
+            overflow: visible;
+        }
+
+        .swiper-slide {
+            background: transparent;
+            border-radius: 0px; 
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: none;
+            height: 100%;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Card Content Styling */
+        .card-media {
+            flex: 0 0 40%;
+            background-color: var(--card-top-bg);
+        }
+
+        .card-text {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--card-bottom-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-text h3 { 
+            margin: 0 0 20px 0; 
+            font-size: 2rem; 
+            letter-spacing: 0.45px;
+            font-weight: 400;
+            text-transform: capitalize;
+            color: #110F0F;
+        }
+        
+        .card-text p { 
+            margin: 0 0 20px 0; 
+            line-height: 1.5; 
+            font-size: 0.95rem;
+            letter-spacing: 0.2px;
+            font-weight: 300;
+            color: #110F0F; 
+            opacity: 0.8;
+        }
+
+        .card-btn {
+            background-color: var(--btn-color);
+            border: none;
+            padding: 12px 30px;
+            font-family: "Spline Sans", sans-serif;
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: #110F0F;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            text-decoration: none;
+            border-radius: 2px;
+        }
+        
+        .card-btn:hover { opacity: 0.8; }
+
+        /* --- Footer Section --- */
+        .footer-wrapper {
+            position: relative;
+            width: 100%;
+            background-color: var(--footer-bg);
+            overflow: hidden; 
+            height: 900px; /* Desktop Height */
+        }
+
+        #physics-canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; 
+        }
+        
+        canvas { display: block; }
+
+        .footer-content {
+            position: relative;
+            z-index: 10; 
+            padding: 80px 60px;
+            height: 100%;
+            box-sizing: border-box;
+            color: var(--footer-text);
+            pointer-events: none; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .footer-header h2 {
+            font-size: 3.5rem; 
+            font-weight: 400;
+            margin: 0;
+            line-height: 1.1;
+            max-width: 600px;
+            pointer-events: auto;
+        }
+
+        .footer-bottom { pointer-events: auto; }
+        .footer-bottom a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* --- Responsive Logic --- */
+
+        /* Desktop specific slide behavior */
+        @media (min-width: 1024px) {
+            .swiper-slide { 
+                opacity: 1; 
+                transform: scale(1);
+                width: 400px !important; 
+                flex-shrink: 0;
+            }
+        }
+
+        /* Mobile Styles (Vertical Stack) */
+        @media (max-width: 1023px) {
+            .nav-brand { font-size: 1.5rem; }
+            .nav-links { display: none; } 
+            .top-nav { padding: 20px 30px; position: relative; }
+            
+            /* Disable Carousel Layout, Enable Vertical Stack */
+            .carousel-section {
+                display: block;
+                min-height: auto;
+                padding: 40px 30px;
+            }
+
+            .swiper {
+                height: auto;
+                overflow: visible;
+            }
+
+            .swiper-wrapper {
+                /* Transform horizontal flex to vertical column */
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                transform: none !important; /* disable swiper translate */
+            }
+
+            .swiper-slide {
+                width: 100% !important;
+                height: 500px; /* Fixed height for cards on mobile */
+                margin: 0 !important;
+                opacity: 1;
+                transform: none !important;
+            }
+            
+            .spacer { height: 50px; }
+            
+            .footer-wrapper { height: 1400px; }
+            .footer-content { padding: 40px 30px; }
+            .footer-header h2 { font-size: 2.2rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">Maybe Pay Me </div>
+        <div class="nav-links">
+            <a href="#">What?</a>
+            <a href="#">Why?</a>
+            <a href="#">Who?</a>
+        </div>
+    </nav>
+
+    <!-- Carousel Section -->
+    <section class="carousel-section">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <!-- Card 1 -->
+                <div class="swiper-slide">
+                    <div class="card-media"></div>
+                    <div class="card-text">
+                        <div>
+                            <h3>Invoice Date Calculator</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut vulputate sem, nec fringilla ipsum.</p>
+                        </div>
+                        <a href="tools/invoice_due_date/invoice_due_date.html" button class="card-btn">Try Me</button></a>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="swiper-slide">
+                    <div class="card-media"></div>
+                    <div class="card-text">
+                        <div>
+                            <h3>Late Fee Calculator</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut vulputate sem, nec fringilla ipsum.</p>
+                        </div>
+                        <a href="tools/late_fee_calculator/late_fee_calculator.html" button class="card-btn">Try Me</button></a>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="swiper-slide">
+                    <div class="card-media"></div>
+                    <div class="card-text">
+                        <div>
+                            <h3>Should I Take This?</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut vulputate sem, nec fringilla ipsum.</p>
+                        </div>
+                        <a href="https://ai.studio/apps/drive/1xnBOvvb5mAh3-5daug486zojyEjc10m2" button class="card-btn">Try Me</button></a>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="swiper-slide">
+                    <div class="card-media"></div>
+                    <div class="card-text">
+                        <div>
+                            <h3>Invoice Generator</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut vulputate sem, nec fringilla ipsum.</p>
+                        </div>
+                        <a href="http://WWW.google.com" button class="card-btn">Try Me</button></a>
+                    </div>
+                </div>
+                <!-- Card 5 
+                <div class="swiper-slide">
+                    <div class="card-media"></div>
+                    <div class="card-text">
+                        <div>
+                            <h3>Tax Estimator</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut vulputate sem, nec fringilla ipsum.</p>
+                        </div>
+                        <a href="http://WWW.google.com" button class="card-btn">Try Me</button></a>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Spacer -->
+    <div class="spacer"></div>
+
+    <!-- Unified Footer Wrapper -->
+    <footer class="footer-wrapper">
+        <div id="physics-canvas-container"></div>
+
+        <div class="footer-content">
+            <div class="footer-header">
+                <h2>Lorem ipsum dolor sit amet consectetur adipiscing elit</h2>
+            </div>
+            
+            <div class="footer-bottom">
+                <a href="https://www.robashley.co.uk" target="_blank">An experiment by Rob Ashley</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/poly-decomp/0.3.0/poly-decomp.min.js"></script>
+
+    <script>
+        // --- 1. Swiper Carousel ---
+        const swiper = new Swiper(".mySwiper", {
+            grabCursor: true,
+            mousewheel: true,
+            keyboard: { enabled: true },
+            // Loop allows scrolling cards off screen smoothly
+            loop: false, 
+            
+            breakpoints: {
+                // Mobile: Disabled (CSS handles stacking)
+                0: {
+                    enabled: false
+                },
+                // Desktop: Enabled, Left Aligned with Offset
+                1024: {
+                    enabled: true,
+                    slidesPerView: 'auto', 
+                    spaceBetween: 40,
+                    centeredSlides: false,
+                    slidesOffsetBefore: 60, // Left padding inside swiper
+                    slidesOffsetAfter: 60   // Right padding
+                }
+            }
+        });
+
+        // --- 2. Physics Engine ---
+        const Engine = Matter.Engine,
+              Render = Matter.Render,
+              Runner = Matter.Runner,
+              Bodies = Matter.Bodies,
+              Body = Matter.Body,
+              Composite = Matter.Composite,
+              Events = Matter.Events,
+              Mouse = Matter.Mouse,
+              MouseConstraint = Matter.MouseConstraint;
+
+        const engine = Engine.create();
+        const world = engine.world;
+
+        const container = document.getElementById('physics-canvas-container');
+        let width = container.clientWidth;
+        let height = container.clientHeight;
+
+        const render = Render.create({
+            element: container,
+            engine: engine,
+            options: {
+                width: width,
+                height: height,
+                wireframes: false,
+                background: 'transparent'
+            }
+        });
+
+        const isMobile = window.innerWidth <= 768;
+        const scale = isMobile ? 0.6 : 1.0;
+
+        // --- Shape Factory Functions (Math Symbols) ---
+        function createPlus(x, y) {
+            const thickness = 50 * scale;
+            const length = 180 * scale;
+            const col = '#be9ce1'; // Purple
+            return Body.create({
+                parts: [
+                    Bodies.rectangle(x, y, thickness, length, { render: { fillStyle: col } }),
+                    Bodies.rectangle(x, y, length, thickness, { render: { fillStyle: col } })
+                ],
+                restitution: 0.6
+            });
+        }
+
+        function createMultiply(x, y) {
+            const thickness = 50 * scale;
+            const length = 200 * scale;
+            const col = '#9cd6e1'; // Cyan
+            const partA = Bodies.rectangle(x, y, thickness, length, { render: { fillStyle: col } });
+            const partB = Bodies.rectangle(x, y, length, thickness, { render: { fillStyle: col } });
+            Body.rotate(partA, Math.PI / 4);
+            Body.rotate(partB, Math.PI / 4);
+            return Body.create({ parts: [partA, partB], restitution: 0.6 });
+        }
+
+        function createEquals(x, y) {
+            const w = 180 * scale;
+            const h = 50 * scale;
+            const gap = 30 * scale;
+            const col = '#c1fe95'; // Lime
+            return Body.create({
+                parts: [
+                    Bodies.rectangle(x, y - h/2 - gap/2, w, h, { render: { fillStyle: col } }),
+                    Bodies.rectangle(x, y + h/2 + gap/2, w, h, { render: { fillStyle: col } })
+                ],
+                restitution: 0.6,
+                angle: -0.2
+            });
+        }
+
+        function createDivide(x, y) {
+            const w = 180 * scale;
+            const h = 50 * scale;
+            const circleR = 25 * scale;
+            const gap = 50 * scale;
+            const col = '#be9ce1'; // Purple
+            return Body.create({
+                parts: [
+                    Bodies.rectangle(x, y, w, h, { render: { fillStyle: col } }),
+                    Bodies.circle(x, y - gap - h/2, circleR, { render: { fillStyle: col } }),
+                    Bodies.circle(x, y + gap + h/2, circleR, { render: { fillStyle: col } })
+                ],
+                restitution: 0.6
+            });
+        }
+
+        function createMinus(x, y) {
+            const w = 180 * scale;
+            const h = 50 * scale;
+            const col = '#c1fe95'; // Lime
+            return Bodies.rectangle(x, y, w, h, { 
+                render: { fillStyle: col },
+                restitution: 0.6
+            });
+        }
+
+        // --- Create Shapes ---
+        const plus = createPlus(width * 0.1, -100);
+        const multiply = createMultiply(width * 0.85, -300);
+        const equals = createEquals(width * 0.3, -200);
+        const divide = createDivide(width * 0.6, -500);
+        const minus = createMinus(width * 0.4, 0);
+
+        // --- Create Date & Time Bodies (Floating Text) ---
+        const textOptions = {
+            render: { 
+                fillStyle: 'transparent',
+                strokeStyle: 'transparent'
+            },
+            restitution: 0.5,
+            frictionAir: 0.02,
+            chamfer: { radius: 10 * scale }
+        };
+
+        const dayBody = Bodies.rectangle(width * 0.15, -50, 160 * scale, 120 * scale, { ...textOptions });
+        const monthBody = Bodies.rectangle(width * 0.5, -400, 300 * scale, 120 * scale, { ...textOptions });
+        const timeBody = Bodies.rectangle(width * 0.7, -150, 350 * scale, 120 * scale, { ...textOptions });
+        const yearBody = Bodies.rectangle(width * 0.8, -50, 300 * scale, 120 * scale, { ...textOptions });
+
+        Composite.add(world, [
+            plus, multiply, equals, divide, minus,
+            dayBody, monthBody, timeBody, yearBody
+        ]);
+
+        // --- Walls ---
+        const wallOptions = { isStatic: true, render: { visible: false } };
+        let floor = Bodies.rectangle(width / 2, height + 50, width, 100, wallOptions);
+        let leftWall = Bodies.rectangle(-50, height / 2, 100, height * 2, wallOptions);
+        let rightWall = Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
+        Composite.add(world, [floor, leftWall, rightWall]);
+
+        // --- Interaction ---
+        const mouse = Mouse.create(render.canvas);
+        const mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: { stiffness: 0.2, render: { visible: false } }
+        });
+        mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+        mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+        Composite.add(world, mouseConstraint);
+        render.mouse = mouse;
+
+        // --- Render Loop (Dynamic Real-Time Text) ---
+        Events.on(render, 'afterRender', function() {
+            const context = render.context;
+            
+            // Real-time Date Calculation
+            const now = new Date();
+            const dayStr = now.getDate().toString();
+            const monthStr = now.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase(); 
+            const yearStr = now.getFullYear().toString();
+            const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillStyle = "#fff"; 
+            context.font = `400 ${150 * scale}px "Spline Sans"`; 
+
+            function drawText(body, text) {
+                const angle = body.angle;
+                context.save();
+                context.translate(body.position.x, body.position.y);
+                context.rotate(angle);
+                context.fillText(text, 0, 10 * scale);
+                context.restore();
+            }
+
+            drawText(dayBody, dayStr);
+            drawText(monthBody, monthStr);
+            drawText(timeBody, timeStr);
+            drawText(yearBody, yearStr);
+        });
+
+        // --- Run ---
+        Render.run(render);
+        const runner = Runner.create();
+        Runner.run(runner, engine);
+
+        // --- Resize Handler ---
+        window.addEventListener('resize', () => {
+            width = container.clientWidth;
+            height = container.clientHeight;
+            render.canvas.width = width;
+            render.canvas.height = height;
+            
+            Composite.remove(world, [floor, leftWall, rightWall]);
+            floor = Bodies.rectangle(width / 2, height + 50, width, 100, wallOptions);
+            leftWall = Bodies.rectangle(-50, height / 2, 100, height * 2, wallOptions);
+            rightWall = Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
+            Composite.add(world, [floor, leftWall, rightWall]);
+        });
+    </script>
+</body>
+</html>

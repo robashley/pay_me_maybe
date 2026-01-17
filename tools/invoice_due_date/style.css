@@ -1,0 +1,225 @@
+body {
+    font-family: "Spline Sans", sans-serif;
+    background-color: #FFFFF1;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.main-wrapper {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header-section h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #202124;
+}
+
+.header-section p {
+    color: #131212;
+    font-weight: 300;
+    font-size: 0.95rem;
+}
+
+/* The Lime Green Card */
+.calculator-card {
+    background-color: #C2FF96;
+    padding: 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    box-sizing: border-box;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 400;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    background-color: #FFFFF1;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.input-group input:focus {
+    box-shadow: 0 0 0 2px #A0D875;
+}
+
+/* Toggle Switch Styling */
+.toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 12px 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+#toggleLabel {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #fff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+    background-color: #BA9BF0;
+}
+
+/* Calculate Button */
+button.btn-primary {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 0px;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    margin-bottom: 20px; /* Space before result box */
+    background-color: #BA9BF0;
+    color: #202124;
+    transition: transform 0.1s, background-color 0.2s;
+}
+
+button.btn-primary:hover {
+    background-color: #a88be0;
+}
+
+button.btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* Result Box Styling */
+.result-box {
+    background-color: #FFFFF1; /* White/Cream box */
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 30px;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.05);*/
+}
+
+#resultText {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #110F0F;
+    word-break: break-word; /* Ensure long dates don't break layout */
+}
+
+.placeholder-text {
+    color: #aaa !important;
+    font-weight: normal !important;
+    font-size: 1rem !important;
+}
+
+.error-text {
+    color: #EC5E4E !important;
+    font-size: 0.95rem !important;
+}
+
+/* Copy Button Styling */
+.copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    color: #777;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Prevent shrinking if text is long */
+}
+
+.copy-btn:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.copy-btn:active {
+    background-color: #e0e0e0;
+}
+
+/* Footer Disclaimer */
+.disclaimer {
+    margin-top: 50px;
+    font-size: 0.7rem;
+    color: #777;
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.5;
+}

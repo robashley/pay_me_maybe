@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Late Fee Calculator</title>
+    
+    <!-- Google Fonts: Spline Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300..700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette based on the image */
+            --bg-page: #FFFFF1;         /* Creamy white background */
+            --bg-card: #BF9DE2;         /* Lilac/Purple card */
+            --bg-input: #FFFFF1;        /* Input matches page bg */
+            --accent-green: #C2FF96;    /* Lime green button */
+            --text-dark: #110F0F;       /* Dark text */
+            --text-muted: #131212;      /* Subtitle text */
+            --toggle-bg: rgba(255,255,255,0.25); /* Semi-transparent bar for toggle */
+        }
+
+        body {
+            font-family: "Spline Sans", sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Header Section (Outside the card) */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            margin-top: 4.5rem;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            color: #110F0F;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        /* Main Card */
+        .calculator-card {
+            background-color: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 30px rgba(100, 50, 150, 0.1);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 400;
+            font-size: 0.95rem;
+            color: #110F0F;
+        }
+
+        /* Custom Badge for "EDITABLE" */
+        .badge {
+            background-color: rgba(255,255,255,0.3);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-left: 6px;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+        }
+
+        input[type="number"],
+        input[type="date"],
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 30px;
+            background-color: var(--bg-input);
+            font-family: "Spline Sans", sans-serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            box-sizing: border-box;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+        
+        input::placeholder {
+            color: #999;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
+        }
+
+        /* External Link text */
+        .help-text {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(0,0,0,0.4);
+            text-decoration: none;
+        }
+        .help-text:hover {
+            text-decoration: underline;
+        }
+
+        /* Toggle Container */
+        .toggle-container {
+            background-color: var(--toggle-bg);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle-label {
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+        
+        .toggle-label strong {
+            font-weight: 700;
+        }
+
+        /* Custom Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .switch input { 
+            opacity: 0; 
+            width: 0; 
+            height: 0; 
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255,255,255,0.4); /* Track color */
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input:checked + .slider {
+            background-color: rgba(255,255,255,0.6);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Calculate Button */
+        button.calculate-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--accent-green);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 0px;
+            font-size: 1.1rem;
+            font-weight: 400;
+            font-family: "Spline Sans", sans-serif;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1.5rem;
+        }
+
+        button.calculate-btn:hover {
+            opacity: 0.9;
+        }
+        
+        button.calculate-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Disclaimer 
+        .disclaimer {
+            font-size: 0.65rem;
+            color: rgba(0,0,0,0.5);
+            text-align: center;
+            line-height: 1.4;
+        } */
+
+        /* Footer Disclaimer */
+        .disclaimer {
+            margin-top: 50px;
+            font-size: 0.7rem;
+            color: #777;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        /* Results Panel */
+        #results {
+            margin-top: 1.5rem;
+            background-color: var(--bg-input);
+            padding: 1.5rem;
+            padding-bottom: 3.5rem; /* Extra padding for the copy button */
+            border-radius: 16px;
+            display: none;
+            position: relative; /* Needed for absolute positioning of copy btn */
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .result-row span:last-child {
+            font-weight: 600;
+            color: #222;
+            text-align: right;
+        }
+
+        .result-row.total {
+            border-top: 2px dashed #ddd;
+            padding-top: 12px;
+            margin-top: 12px;
+            margin-bottom: 0;
+            font-size: 1.1rem;
+            color: #000;
+        }
+        
+        .result-row.total span:last-child {
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-family: "Spline Sans", sans-serif;
+            font-size: 0.8rem;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #e0e0e0;
+            color: #000;
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .copy-btn.copied {
+            background-color: var(--accent-green);
+            color: var(--text-dark);
+            border-color: var(--accent-green);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Late Fee Calculator 💸</h1>
+        <p class="subtitle">Based on UK Late Payment of Commerical Debts Act 1998</p>
+    </header>
+
+    <div class="calculator-card">
+        
+        <div class="form-group">
+            <label for="amount">Invoice Amount (£)</label>
+            <input type="number" id="amount" placeholder="500" step="0.01">
+        </div>
+
+        <div class="form-group">
+            <label for="invoiceDate">Invoice Sent Date</label>
+            <input type="date" id="invoiceDate">
+        </div>
+
+        <div class="form-group">
+            <label for="terms">Payment Terms (Days)</label>
+            <input type="number" id="terms" placeholder="30" value="30">
+        </div>
+
+        <div class="form-group">
+            <label for="baseRate">BoE Base Rate (%) <span class="badge">Editable</span></label>
+            <input type="number" id="baseRate" value="3.75" step="0.01">
+            <a href="https://www.bankofengland.co.uk/" target="_blank" class="help-text">Check current rate at bankofengland.co.uk</a>
+        </div>
+
+        <div class="toggle-container">
+            <span class="toggle-label">Calculate Using: <strong id="dayTypeLabel">Calendar Days</strong></span>
+            <label class="switch">
+                <input type="checkbox" id="businessDaysToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateLateFee()">Calculate Late Fees</button>
+
+        <!-- Results Section (Receipt Style) -->
+        <div id="results">
+            <div class="result-row">
+                <span>Interest Rate:</span>
+                <span id="res-rate">0%</span>
+            </div>
+            <div class="result-row">
+                <span>Days Late:</span>
+                <span id="res-days">0</span>
+            </div>
+            <div class="result-row">
+                <span>Daily Interest:</span>
+                <span id="res-daily">£0.00</span>
+            </div>
+            <div class="result-row">
+                <span>Total Interest:</span>
+                <span id="res-interest">£0.00</span>
+            </div>
+            <div class="result-row">
+                <span>Statutory Fee:</span>
+                <span id="res-compensation">£40.00</span>
+            </div>
+            <div class="result-row total">
+                <span>Total Due:</span>
+                <span id="res-total">£0.00</span>
+            </div>
+
+            <!-- Copy Button -->
+            <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()" aria-label="Copy results to clipboard">
+                <!-- SVG Clipboard Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M208 0H332.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128h80v64H64V448H256V416h64v48c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V192c0-35.3 28.7-64 64-64zm336 64h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H384v32c0 8.8-7.2 16-16 16H352c-8.8 0-16-7.2-16-16V256h-32c-8.8 0-16-7.2-16-16V208c0-8.8 7.2-16 16-16zm-80 128h96c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32H304c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32z"/></svg>
+                <span id="copyText">Copy</span>
+            </button>
+        </div>
+    </div>
+    <div class="disclaimer">
+            <strong>Disclaimer:</strong> This tool is for estimation purposes only. The statutory compensation fee is fixed at £40 for debts under £1,000 (it rises to £70 for debts up to £10,000 and £100 for higher debts). Please consult a financial advisor or legal professional for official debt recovery actions.
+    </div>
+
+<script>
+    // List of UK Bank Holidays (Year-Month-Day strings)
+    const ukBankHolidays = [
+        "2023-01-02", "2023-04-07", "2023-04-10", "2023-05-01", "2023-05-08", "2023-05-29", "2023-08-28", "2023-12-25", "2023-12-26",
+        "2024-01-01", "2024-03-29", "2024-04-01", "2024-05-06", "2024-05-27", "2024-08-26", "2024-12-25", "2024-12-26",
+        "2025-01-01", "2025-04-18", "2025-04-21", "2025-05-05", "2025-05-26", "2025-08-25", "2025-12-25", "2025-12-26",
+        "2026-01-01", "2026-04-03", "2026-04-06", "2026-05-04", "2026-05-25", "2026-08-31", "2026-12-25", "2026-12-28",
+        "2027-01-01", "2027-03-26", "2027-03-29", "2027-05-03", "2027-05-31", "2027-08-30", "2027-12-27", "2027-12-28",
+        "2028-01-03", "2028-04-14", "2028-04-17", "2028-05-01", "2028-05-29", "2028-08-28", "2028-12-25", "2028-12-26"
+    ];
+
+    // Toggle Label Update
+    const toggle = document.getElementById('businessDaysToggle');
+    const dayTypeLabel = document.getElementById('dayTypeLabel');
+    
+    toggle.addEventListener('change', function() {
+        dayTypeLabel.innerText = this.checked ? "Business Days" : "Calendar Days";
+    });
+
+    function isBusinessDay(date) {
+        const day = date.getDay();
+        if (day === 0 || day === 6) return false;
+        const dateString = date.toISOString().split('T')[0];
+        if (ukBankHolidays.includes(dateString)) return false;
+        return true;
+    }
+
+    function calculateLateFee() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        const invoiceDateStr = document.getElementById('invoiceDate').value;
+        const terms = parseInt(document.getElementById('terms').value);
+        const baseRate = parseFloat(document.getElementById('baseRate').value);
+        const useBusinessDays = document.getElementById('businessDaysToggle').checked;
+
+        if (!amount || !invoiceDateStr || isNaN(terms) || isNaN(baseRate)) {
+            alert("Please fill in all fields correctly.");
+            return;
+        }
+
+        const invoiceDate = new Date(invoiceDateStr);
+        const dueDate = new Date(invoiceDate);
+        dueDate.setDate(invoiceDate.getDate() + terms);
+        
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        dueDate.setHours(0,0,0,0);
+
+        if (today <= dueDate) {
+            alert("This invoice is not late yet based on the payment terms provided.");
+            document.getElementById('results').style.display = 'none';
+            return;
+        }
+
+        let daysLate = 0;
+        if (useBusinessDays) {
+            let tempDate = new Date(dueDate);
+            tempDate.setDate(tempDate.getDate() + 1);
+            while (tempDate <= today) {
+                if (isBusinessDay(tempDate)) { daysLate++; }
+                tempDate.setDate(tempDate.getDate() + 1);
+            }
+        } else {
+            const diffTime = Math.abs(today - dueDate);
+            daysLate = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        }
+
+        const statutoryRate = 8.0;
+        const totalRate = baseRate + statutoryRate;
+        const annualInterest = amount * (totalRate / 100);
+        const dailyInterest = annualInterest / 365;
+        const totalInterestAccrued = dailyInterest * daysLate;
+
+        let compensationFee = 40.00;
+        if (amount >= 10000) { compensationFee = 100.00; } 
+        else if (amount >= 1000) { compensationFee = 70.00; }
+
+        const finalTotal = amount + totalInterestAccrued + compensationFee;
+
+        const fmtMoney = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
+
+        document.getElementById('res-rate').innerText = `${baseRate}% + 8% = ${totalRate.toFixed(2)}%`;
+        document.getElementById('res-days').innerText = `${daysLate} ${useBusinessDays ? 'Business Days' : 'Days'}`;
+        document.getElementById('res-daily').innerText = fmtMoney.format(dailyInterest);
+        document.getElementById('res-interest').innerText = fmtMoney.format(totalInterestAccrued);
+        document.getElementById('res-compensation').innerText = fmtMoney.format(compensationFee);
+        document.getElementById('res-total').innerText = fmtMoney.format(finalTotal);
+
+        document.getElementById('results').style.display = 'block';
+    }
+
+    async function copyToClipboard() {
+        // Collect text to copy
+        const rate = document.getElementById('res-rate').innerText;
+        const days = document.getElementById('res-days').innerText;
+        const daily = document.getElementById('res-daily').innerText;
+        const interest = document.getElementById('res-interest').innerText;
+        const fee = document.getElementById('res-compensation').innerText;
+        const total = document.getElementById('res-total').innerText;
+
+        const copyString = `Late Fee Calculation\n------------------\nInterest Rate: ${rate}\nDays Late: ${days}\nDaily Interest: ${daily}\nTotal Interest: ${interest}\nStatutory Fee: ${fee}\n------------------\nTotal Due: ${total}`;
+
+        try {
+            await navigator.clipboard.writeText(copyString);
+            
+            // Visual Feedback
+            const btn = document.getElementById('copyBtn');
+            const btnText = document.getElementById('copyText');
+            
+            btn.classList.add('copied');
+            btnText.innerText = "Copied!";
+            
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                btnText.innerText = "Copy";
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    }
+</script>
+
+</body>
+</html>
