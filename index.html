@@ -17,7 +17,7 @@
         :root {
             --bg-color: #FFFFF1;
             --text-color: #110F0F;
-            --card-top-bg: #e6e6e6; 
+            --card-top-bg: #ffffff; 
             --card-bottom-bg: #efc6ed; 
             --btn-color: #C2FF96;
             --footer-bg: #2f3726;
@@ -48,10 +48,22 @@
         }
 
         .nav-brand {
-            font-size: 2rem;
-            font-weight: 400;
-            letter-spacing: 0px;
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.25px;
             color: var(--text-color);
+            border: 0px solid var(--text-color);
+            padding: 4px 16px 4px 16px;
+            /* background-color: #C2FF96; */
+            border-radius: 50px;
+            animation: colorChange 10s infinite;
+        }
+
+        @keyframes colorChange {
+            0% { background-color: #C2FF96; }
+            33% { background-color: #9DD7E2; }
+            66% { background-color: #efc6ed; }
+            100% { background-color: #C2FF96; }
         }
 
         .nav-links {
@@ -59,17 +71,22 @@
             gap: 40px;
         }
 
-        .nav-links a {
+        .nav-links .myBtn {
+            border: none;
             text-decoration: none;
             color: var(--text-color);
+            font-family: "Spline Sans", sans-serif;
+            background-color: transparent;
             font-weight: 400;
             font-size: 1rem;
             text-transform: capitalize;
             letter-spacing: 0px;
             transition: opacity 0.2s;
+            padding: 0;
+            cursor: pointer;
         }
 
-        .nav-links a:hover { opacity: 0.6; }
+        .nav-links .myBtn:hover { color: #9DD7E2;}
 
         /* --- Carousel Section --- */
         .carousel-section {
@@ -102,16 +119,20 @@
         .card-media {
             flex: 0 0 40%;
             background-color: var(--card-top-bg);
+            border-radius: 20px 20px 0 0;
         }
 
         .coming-soon {
             opacity: 0.6;
+            filter: blur(1px);
         }
 
         .card-text {
             flex: 1;
             padding: 30px;
-            background-color: var(--card-bottom-bg);
+            background: linear-gradient(135deg,rgba(239, 198, 237, 0.9) 50%,rgba(249, 234, 239, 0.9) 100%),
+            url('assets/css/noise.svg');
+            border-radius: 0 0 20px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -120,7 +141,7 @@
 
         .card-text h3 { 
             margin: 0 0 20px 0; 
-            font-size: 2rem; 
+            font-size: 1.6rem; 
             letter-spacing: 0.45px;
             font-weight: 400;
             text-transform: capitalize;
@@ -175,7 +196,7 @@
 
         .footer-content {
             position: relative;
-            z-index: 10; 
+            z-index: 4; 
             padding: 80px 60px;
             height: 100%;
             box-sizing: border-box;
@@ -203,6 +224,65 @@
             font-weight: 400;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+        }
+
+        /* The Modal (background) */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 5; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(255, 255, 255, 0.4); /* Fallback color */
+        /* background-color: rgba(255, 255, 255, 0.4); /* White w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        backdrop-filter: blur(8px);
+        }
+
+        .modal-content p {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100vh;
+        text-align: center;
+        line-height: 1.4rem;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0.25px;
+        color: var(--text-color);
+        }
+
+        /* The Close Button */
+        .close {
+        color: var(--text-color);
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: #BF9DE2;
+        text-decoration: none;
+        cursor: pointer;
         }
 
         /* --- Responsive Logic --- */
@@ -266,7 +346,7 @@
     <nav class="top-nav">
         <div class="nav-brand">Maybe Pay Me</div>
         <div class="nav-links">
-            <a href="#">About</a>
+            <button id="myBtn" class="myBtn">About</button>
         </div>
     </nav>
 
@@ -276,46 +356,46 @@
             <div class="swiper-wrapper">
                 <!-- Card 1 -->
                  <div class="swiper-slide">
-                    <div class="card-media"></div>
+                    <div class="card-media" style="background-image: url('assets/images/Frame 17.png');"></div>
                     <div class="card-text">
                         <div>
                             <h3>Should I Take This Project?</h3>
-                            <p>The brutally honest decision engine for creatives.</p>
+                            <p>The brutally honest decision engine for creatives</p>
                         </div>
                         <a href="https://ai.studio/apps/drive/1xnBOvvb5mAh3-5daug486zojyEjc10m2" button class="card-btn">Try</button></a>
                     </div>
                 </div>
                 <!-- Card 2 -->
                 <div class="swiper-slide">
-                    <div class="card-media"></div>
+                    <div class="card-media" style="background-image: url('assets/images/Frame 18.png');"></div>
                     <div class="card-text">
                         <div>
                             <h3>Due Date Calculator</h3>
-                            <p>The simplest way to find out figure out the<br> due date.</p>
+                            <p>The simplest way to find out figure out the<br> due date</p>
                         </div>
                         <a href="tools/invoice_due_date/invoice_due_date.html" button class="card-btn">Try</button></a>
                     </div>
                 </div>
                 <!-- Card 3 -->
                <div class="swiper-slide">
-                    <div class="card-media"></div>
+                    <div class="card-media" style="background-image: url('assets/images/Frame 19.png');"></div>
                     <div class="card-text">
                         <div>
                             <h3>Late Fee Calculator</h3>
-                            <p>How much is that late invoice worth?<br>Let's check.</p>
+                            <p>How much is that late invoice worth?<br>Let's check</p>
                         </div>
                         <a href="tools/late_fee_calculator/late_fee_calculator.html" button class="card-btn">Try</button></a>
                     </div>
                 </div>
                 <!-- Card 4 -->
                 <div class="swiper-slide">
-                    <div class="card-media"></div>
+                    <div class="coming-soon card-media" style="background-image: url('assets/images/Frame 20.png');"></div>
                     <div class="coming-soon card-text">
                         <div>
                             <h3>What's Next?</h3>
                             <p>New tools in the works. Watch this space.</p>
                         </div>
-                        <button class="card-btn">Coming Soon</button></a>
+                        <button class="card-btn">Coming Soon</button>
                     </div>
                 </div>
                 <!-- Card 5 
@@ -334,6 +414,22 @@
         </div>
     </section>
 
+    <!-- Modal -->
+    <!-- Trigger/Open The Modal -->
+    <!-- <button id="myBtn">About</button> -->
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <p>Maybe Pay Me exists for one simple reason: getting paid shouldn’t be this hard. <br><br>
+        If you freelance or run a small business, chances are you’ve dealt with late—or mysteriously forgotten—invoices. The good news? You can charge interest and recovery fees. The better news? We made free tools to help you do it without losing focus (or your mind). Get back to your work. <br><br>Less awkward follow-ups, more money in your account.
+    </p>
+    </div>
+
+    </div>
+
     <!-- Spacer -->
     <div class="spacer"></div>
 
@@ -343,7 +439,7 @@
 
         <div class="footer-content">
             <div class="footer-header">
-                <h2>Lorem ipsum dolor sit amet consectetur adipiscing elit</h2>
+                <h2>Making the struggle between the books and the art more bearable</h2>
             </div>
             
             <div class="footer-bottom">
@@ -576,6 +672,41 @@
             rightWall = Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
             Composite.add(world, [floor, leftWall, rightWall]);
         });
+        
+        // --- Modal Logic ---
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, toggle the modal
+        btn.onclick = function() {
+        if (modal.style.display === "block") {
+            modal.style.display = "none";
+            btn.textContent = "About";
+        } else {
+            modal.style.display = "block";
+            btn.textContent = "Close";
+        }
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        btn.textContent = "About";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            btn.textContent = "About";
+        }
+        }
     </script>
 </body>
 </html>
