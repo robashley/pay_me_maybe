@@ -214,6 +214,38 @@ button.btn-primary:active {
     background-color: #e0e0e0;
 }
 
+/* Header Navigation */
+.header-nav {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    z-index: 10;
+}
+
+.back-btn {
+    border: none;
+    text-decoration: none;
+    color: #110F0F;
+    font-family: "Spline Sans", sans-serif;
+    background-color: transparent;
+    font-weight: 400;
+    font-size: 1rem;
+    text-transform: capitalize;
+    letter-spacing: 0px;
+    transition: color 0.2s;
+    padding: 0;
+    cursor: pointer;
+    display: block;
+}
+
+.back-btn:hover {
+    color: #9DD7E2;
+}
+
+.back-btn-mobile {
+    display: none;
+}
+
 /* Footer Disclaimer */
 .disclaimer {
     margin-top: 50px;
@@ -222,4 +254,17 @@ button.btn-primary:active {
     text-align: center;
     max-width: 600px;
     line-height: 1.5;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .header-nav {
+        display: none;
+    }
+
+    .back-btn-mobile {
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+    }
 }

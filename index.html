@@ -22,6 +22,7 @@
             --btn-color: #C2FF96;
             --footer-bg: #2f3726;
             --footer-text: #fff;
+            --gradient: linear-gradient(45deg,#C2FF96,#9DD7E2,#BF9DE2,#EFC6ED);
         }
 
         body {
@@ -47,24 +48,33 @@
             z-index: 10;
         }
 
-        .nav-brand {
+        .top-nav .nav-brand {
             font-size: 1.8rem;
             font-weight: 300;
             letter-spacing: 0.25px;
             color: var(--text-color);
             border: 0px solid var(--text-color);
             padding: 4px 16px 4px 16px;
-            /* background-color: #C2FF96; */
+            /* background-image: var(--gradient);
+            background-size: 400%; */
             border-radius: 50px;
-            animation: colorChange 10s infinite;
+            /* animation: bg-animation 10s infinite alternate; */
         }
 
-        @keyframes colorChange {
+        @keyframes bg-animation {
+            0% { background-position: left; }
+            100% { background-position: right; }
+        }
+            /* animation: colorChange 10s infinite; */
+
+        /* @keyframes colorChange {
             0% { background-color: #C2FF96; }
             33% { background-color: #9DD7E2; }
             66% { background-color: #efc6ed; }
             100% { background-color: #C2FF96; }
-        }
+        } */
+
+      
 
         .nav-links {
             display: flex;
@@ -101,7 +111,7 @@
         .swiper {
             width: 100%;
             height: 500px;
-            overflow: visible;
+            overflow: hidden;
         }
 
         .swiper-slide {
@@ -236,8 +246,10 @@
         width: 100%; /* Full width */
         height: 100%; /* Full height */
         overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(255, 255, 255, 0.4); /* Fallback color */
-        /* background-color: rgba(255, 255, 255, 0.4); /* White w/ opacity */
+        /* background-image: var(--gradient);  Fallback color */
+        background-size: 300%;
+        /* animation: bg-animation 10s infinite alternate; */
+        background-color: rgba(255, 255, 255, 0.4); /* White w/ opacity for frosted effect */
         }
 
         /* Modal Content/Box */
@@ -263,9 +275,9 @@
         width: 50%;
         height: 100vh;
         text-align: center;
-        line-height: 1.4rem;
-        font-size: 1rem;
-        font-weight: 400;
+        line-height: 2rem;
+        font-size: 1.4rem;
+        font-weight: 300;
         letter-spacing: 0.25px;
         color: var(--text-color);
         }
@@ -346,7 +358,7 @@
     <nav class="top-nav">
         <div class="nav-brand">Maybe Pay Me</div>
         <div class="nav-links">
-            <button id="myBtn" class="myBtn">About</button>
+            <button id="myBtn" class="myBtn">Why</button>
         </div>
     </nav>
 
@@ -423,8 +435,9 @@
 
     <!-- Modal content -->
     <div class="modal-content">
-        <p>Maybe Pay Me exists for one simple reason: getting paid shouldn’t be this hard. <br><br>
-        If you freelance or run a small business, chances are you’ve dealt with late—or mysteriously forgotten—invoices. The good news? You can charge interest and recovery fees. The better news? We made free tools to help you do it without losing focus (or your mind). Get back to your work. <br><br>Less awkward follow-ups, more money in your account.
+        <p>Maybe Pay Me exists for one simple reason — getting paid shouldn’t be this hard. <br><br>
+        If you freelance or run a small business, chances are you’ve dealt with late (or mysteriously forgotten)invoices. The good news – you can charge interest and recovery fees. <br><br>
+        The better news – we made free tools to help you do it without losing focus (or your mind), so you can get back to your work. <br><br>Less awkward follow-ups, more money in your account.
     </p>
     </div>
 
@@ -687,24 +700,24 @@
         btn.onclick = function() {
         if (modal.style.display === "block") {
             modal.style.display = "none";
-            btn.textContent = "About";
+            btn.textContent = "Why";
         } else {
             modal.style.display = "block";
-            btn.textContent = "Close";
+            btn.textContent = "That's Why";
         }
         }
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
         modal.style.display = "none";
-        btn.textContent = "About";
+        btn.textContent = "Why";
         }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
-            btn.textContent = "About";
+            btn.textContent = "Why";
         }
         }
     </script>
