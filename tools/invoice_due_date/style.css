@@ -71,6 +71,12 @@ body {
     outline: none;
 }
 
+.input-group input[type="date"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 .input-group input:focus {
     box-shadow: 0 0 0 2px #A0D875;
 }
