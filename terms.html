@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions - Maybe Pay Me</title>
+
+    <!-- Fonts: Spline Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300..700&display=swap" rel="stylesheet">
+
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <style>
+        :root {
+            --bg-color: #FFFFF1;
+            --text-color: #110F0F;
+            --text-muted: #555555;
+            --accent-green: #C2FF96;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Spline Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation --- */
+        .top-nav {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 44px 60px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .nav-logo img {
+            display: block;
+            width: 240px;
+            max-width: 80vw;
+        }
+
+        .header-nav {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+        }
+
+        .back-btn {
+            border: none;
+            text-decoration: none;
+            color: var(--text-color);
+            font-family: "Spline Sans", sans-serif;
+            background-color: transparent;
+            font-weight: 400;
+            font-size: 1rem;
+            text-transform: capitalize;
+            letter-spacing: 0px;
+            transition: color 0.2s;
+            padding: 0;
+            cursor: pointer;
+            display: block;
+        }
+
+        .back-btn:hover {
+            color: #9DD7E2;
+        }
+
+        /* --- Content Layout --- */
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 30px 100px 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #303827;
+        }
+
+        .last-updated {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 3.5rem;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #110F0F;
+        }
+
+        p,
+        li {
+            font-size: 1.05rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            font-weight: 500;
+            color: #110F0F;
+        }
+
+        /* --- Responsive --- */
+        .back-btn-mobile {
+            display: none;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .back-btn-mobile .back-btn {
+            display: inline-block;
+        }
+
+        @media (max-width: 1023px) {
+            .top-nav {
+                padding: 40px 30px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-logo img {
+                width: 200px;
+            }
+
+            .header-nav {
+                display: none;
+            }
+
+            .content-container {
+                padding: 40px 30px 80px 30px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .back-btn-mobile {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="top-nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="assets/images/Frame 23.svg" alt="Maybe Pay Me Logo">
+            </a>
+        </div>
+        <div class="header-nav">
+            <a href="index.html" class="back-btn">← Back</a>
+        </div>
+    </nav>
+
+    <!-- Terms Content -->
+    <main class="content-container">
+        <h1>Terms and Conditions</h1>
+        <div class="last-updated">Last Updated: April 2026</div>
+
+        <h2>1. Introduction</h2>
+        <p>Welcome to Maybe Pay Me (www.maybepayme.com). By accessing or using our website and its suite of tools (the
+            "Service"), you agree to be bound by these Terms and Conditions. If you do not agree with any part of these
+            terms, please do not use our Service.</p>
+
+        <h2>2. Description of Service</h2>
+        <p>Maybe Pay Me provides administrative utility tools for creative freelancers and small businesses, including
+            but not limited to:</p>
+        <ul>
+            <li>Invoice Due Date Calculator</li>
+            <li>Late Fee &amp; Interest Calculator</li>
+            <li>"Should I Take This?" Decision Engine</li>
+            <li>Email Templates ("Polite Pesters")</li>
+        </ul>
+        <p><strong>Right to Modify:</strong> We operate an evolving suite of tools. We reserve the right to add, modify,
+            or remove any tools or features from the Service at any time, without prior notice or liability to you.</p>
+
+        <h2>3. No Professional Advice</h2>
+        <p>The Service is provided for general informational and illustrative purposes only.</p>
+        <ul>
+            <li><strong>Not Legal or Financial Advice:</strong> Maybe Pay Me is not a law firm or a financial advisor.
+                The calculations provided (including statutory interest or debt recovery fees) do not constitute legal
+                or professional advice.</li>
+            <li><strong>Accuracy:</strong> While we aim for the tools to reflect standard UK practices (such as the Late
+                Payment of Commercial Debts (Interest) Act 1998), we do not guarantee the accuracy or applicability of
+                the results to your specific circumstances.</li>
+            <li><strong>User Responsibility:</strong> It is your responsibility to ensure that any late fees or terms
+                you apply are compliant with your specific client contracts and relevant U.K. regulations.</li>
+        </ul>
+
+        <h2>4. Limitation of Liability</h2>
+        <p>To the maximum extent permitted by law, Maybe Pay Me (and its owners) shall not be liable for any indirect,
+            incidental, or consequential damages, including loss of profits or revenue, arising out of your use of the
+            tools. Use of the Service is entirely at your own risk.</p>
+
+        <h2>5. Intellectual Property</h2>
+        <p>The design, code, and content of Maybe Pay Me (including the "Maybe Pay Me" name and logo) are the
+            intellectual property of the site owners. You may use the tools for your personal or business admin but may
+            not scrape, replicate, or resell the tools themselves.</p>
+
+        <h2>6. Governing Law and Jurisdiction</h2>
+        <p>These Terms and Conditions are governed by and construed in accordance with the laws of England and Wales.
+            Any disputes relating to these terms shall be subject to the exclusive jurisdiction of the courts of England
+            and Wales.</p>
+
+        <h2>7. Contact</h2>
+        <p>If you have any questions regarding these terms, please contact us via the feedback link on the Website.</p>
+
+        <div class="back-btn-mobile">
+            <a href="index.html" class="back-btn">← Back</a>
+        </div>
+    </main>
+    <!-- 100% privacy-first analytics -->
+    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+
+</body>
+
+</html>
