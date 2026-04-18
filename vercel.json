@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/quiz",
+            "destination": "https://freelancer-tool-stop.vercel.app"
+        },
+        {
+            "source": "/quiz/:path*",
+            "destination": "https://freelancer-tool-stop.vercel.app/:path*"
+        }
+    ]
+}
