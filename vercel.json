@@ -6,7 +6,7 @@
         },
         {
             "source": "/quiz/:path*",
-            "destination": "freelancer-tool-stop-robashleys-projects.vercel.app/:path*"
+            "destination": "freelancer-tool-stop-robashleys-projects.vercel.app:path*"
         }
     ]
 }
