@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .box {
+            width: 75px;
+            height: 75px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #110F0F;
+            background: linear-gradient(45deg, #C2FF96, #9DD7E2, #BF9DE2, #EFC6ED);
+            font-weight: 600;
+            line-height: 1.2;
+            will-change: transform;
+            display: block;
+        }
+
+        .hero-text {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 500;
+            color: #303827;
+            margin: 0 0 20px 0;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box gradient-green"></div>
+    <div class="hero-text">
+        Less awkward follow-ups<br>more money in your account<br>
+        Let’s go!
+    </div>
+
+    <script src="js/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            //gsap code here!
+            gsap.to(".box", {
+                rotation: 360,
+                duration: 2,
+            });
+        });
+    </script>
+
+</body>
+
+</html>

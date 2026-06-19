@@ -323,7 +323,7 @@
         }
 
         .story-tag {
-            background: var(--btn-color);
+            background: var(--bg-color);
             font-size: 12px;
             padding: 6px 12px;
             border-radius: 4px;
@@ -356,6 +356,101 @@
         .see-more-btn:hover {
             opacity: 0.8;
             transform: scale(1.02);
+        }
+
+        /* --- FAQ Section --- */
+        .faq-section {
+            padding: 80px 0 180px 0;
+            text-align: center;
+            background-color: #EBD3F1;
+            /* Light purple background */
+        }
+
+        .faq-section h2 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: #303827;
+            margin-bottom: 60px;
+            margin-top: 0;
+        }
+
+        .faq-container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            width: 100%;
+        }
+
+        .faq-accordion {
+            background-color: #CCB0E5;
+            /* Darker purple for buttons */
+            color: #110F0F;
+            cursor: pointer;
+            padding: 44px 40px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.6rem;
+            font-family: inherit;
+            font-weight: 400;
+            border-radius: 20px;
+            transition: background-color 0.3s, border-radius 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-accordion.active {
+            color: #C2FF96;
+        }
+
+        .faq-accordion:hover {
+            color: #C2FF96
+        }
+
+        .faq-icon {
+            font-size: 2.5rem;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .faq-panel {
+            padding: 0 40px;
+            background-color: #CCB0E5;
+            max-height: 0;
+            overflow: hidden;
+            text-align: left;
+            border-radius: 0 0 20px 20px;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .faq-accordion.active+.faq-panel {
+            max-height: 800px;
+            padding: 0 40px 44px 40px;
+        }
+
+        .faq-panel p {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: #110F0F;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .faq-accordion.active+.faq-panel p {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
         }
 
         /* --- Footer Section --- */
@@ -571,6 +666,10 @@
                 min-height: 200px;
             }
 
+            .faq-container {
+                padding: 0 20px;
+            }
+
             .hero-text {
                 padding-top: 220px;
                 padding-bottom: 40px;
@@ -628,8 +727,8 @@
                             <h3>Should I Take This?</h3>
                             <p>The brutally honest decision engine for creatives.</p>
                         </div>
-                        <a href="https://freelancer-tool-stop.vercel.app/" target="_blank"
-                            style="text-decoration:none;"><button class="card-btn">Try Me</button></a>
+                        <a href="https://ai.studio/apps/7be90348-d3cb-4834-b6b2-7f218fa4d431?fullscreenApplet=trueh"
+                            target="_blank" style="text-decoration:none;"><button class="card-btn">Try Me</button></a>
                     </div>
                 </div>
                 <!-- Card 2 -->
@@ -715,6 +814,102 @@
             </a>
         </div>
         <button class="see-more-btn">More to come</button>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2>FAQs</h2>
+        <div class="faq-container">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item">
+                <button class="faq-accordion">
+                    What details do I need on my invoice?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-panel">
+                    <p>Keep it simple but unignorable. You need: your business details, your client’s info, a clear
+                        breakdown of the services rendered, the total amount due, and your payment terms (like "Net
+                        14"). Oh, and your bank details—otherwise, they definitely won't pay you.
+                    </p>
+                </div>
+            </div>
+            <!-- FAQ Item 2 -->
+            <div class="faq-item">
+                <button class="faq-accordion">
+                    Can I legally charge late fees if it’s not in my contract?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-panel">
+                    <p>Yes! In the UK, if you are freelancing for another business (B2B), you are automatically
+                        protected by the Late Payment of Commercial Debts (Interest) Act 1998. Even if your contract is
+                        silent on late fees, the law says you have a statutory right to charge interest (8% plus the
+                        Bank of England base rate) and a fixed compensation fee.</p>
+                </div>
+            </div>
+            <!-- FAQ Item 3 -->
+            <div class="faq-item">
+                <button class="faq-accordion">
+                    Do I need payment terms information on my invoice?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-panel">
+                    <p>Ideally, yes. Writing "Payment due within 14 days" at the bottom removes the client’s ability to
+                        play dumb later. It turns a vague request for money into a binding deadline.</p>
+                </div>
+            </div>
+            <!-- FAQ Item 4 -->
+            <div class="faq-item">
+                <button class="faq-accordion">
+                    How do I tell my client my payment terms?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-panel">
+                    <p>Put them on your invoice, but more importantly, talk about them before you open a single creative
+                        file. Mention them in your initial proposal, contract, or kickoff email. Under UK law, late fees
+                        are much easier to enforce if the client explicitly agreed to the timeline before the work
+                        actually started.</p>
+                </div>
+            </div>
+            <!-- FAQ Item 5 -->
+            <div class="faq-item">
+                <button class="faq-accordion">
+                    Will charging a late fee ruin my relationship with the client?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-panel">
+                    <p>It shouldn't if handled professionally. It establishes you as a business, not a hobbyist. Most
+                        clients pay pretty swiftly once they see a late fee breakdown because it makes the
+                        penalty objective and legally backed, rather than personal. Keep the tone firm but
+                        professional.</p>
+                </div>
+            </div>
+            <!-- FAQ Item 6 -->
+            <div class="faq-item">
+                <button class="faq-accordion">
+                    What if my client refuses to pay the late fee?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-panel">
+                    <p>If they pay the original invoice amount but refuse the late fee, you are still legally entitled
+                        to that fee. You can choose to waive it as a gesture of goodwill if they pay quickly, or keep it
+                        on their account as an outstanding balance to be paid before you start any future work.
+                    </p>
+                </div>
+            </div>
+            <!-- FAQ Item 7 -->
+            <div class="faq-item">
+                <button class="faq-accordion">
+                    What is that Statutory Fee on the calculator?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-panel">
+                    <p> It’s a fixed compensation fee that UK law allows you to charge to cover the administrative costs
+                        of chasing a late invoice. The amount depends on the size of the debt: £40 for debts under
+                        £1,000; £70 for debts up to £9,999.99; and £100 for debts £10,000 or more.
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Modal -->
@@ -1047,6 +1242,23 @@
                 if (logo) logo.style.opacity = '1';
             }
         }
+
+        // --- FAQ Accordion Logic ---
+        const faqAccordions = document.querySelectorAll(".faq-accordion");
+        faqAccordions.forEach(acc => {
+            acc.addEventListener("click", function () {
+                this.classList.toggle("active");
+                const icon = this.querySelector('.faq-icon');
+
+                if (this.classList.contains("active")) {
+                    icon.textContent = "-";
+                    this.style.borderRadius = "20px 20px 0 0";
+                } else {
+                    icon.textContent = "+";
+                    this.style.borderRadius = "20px";
+                }
+            });
+        });
     </script>
     <!-- 100% privacy-first analytics -->
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
