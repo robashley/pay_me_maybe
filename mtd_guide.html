@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making Tax Digital - Quick Guide for Freelancers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Spline Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f0f0f0;
+            padding: 20px 0;
+        }
+
+        .page {
+            width: 297mm;
+            height: 210mm;
+            padding: 10mm 20mm 8mm 20mm;
+            margin: 0 auto 15mm auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+
+        /* Cover & Back Cover */
+        .cover,
+        .back-cover {
+            width: 297mm;
+            height: 210mm;
+            margin: 0 auto 15mm auto;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover {
+            background-image: url('https://www.maybepayme.com/assets/images/MTD_Cover_a4.png');
+        }
+
+        .back-cover {
+            background-image: url('https://www.maybepayme.com/assets/images/MTD_BackCover_a4.png');
+        }
+
+        /* Invisible link hotspots over back cover image */
+        .back-cover a {
+            position: absolute;
+            display: block;
+            left: 5%;
+            width: 70%;
+            height: 10%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .bc-link-1 {
+            top: 20%;
+        }
+
+        .bc-link-2 {
+            top: 30%;
+        }
+
+        .bc-link-3 {
+            top: 40%;
+        }
+
+        .bc-link-4 {
+            top: 52%;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header {
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: rgb(47, 55, 38);
+            margin-bottom: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 16px;
+            color: #666;
+            font-weight: normal;
+        }
+
+        /* 2-Column Layout */
+        .content-body {
+            column-count: 2;
+            column-gap: 40px;
+            column-rule: 1px solid #e0e0e0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        h2,
+        h3,
+        .highlight,
+        .important,
+        table,
+        ul,
+        ol,
+        p {
+            break-inside: avoid;
+            -webkit-column-break-inside: avoid;
+        }
+
+        h2 {
+            font-size: 16px;
+            color: rgb(47, 55, 38);
+            margin-top: 0;
+            margin-bottom: 8px;
+            padding-bottom: 3px;
+        }
+
+        *+h2 {
+            margin-top: 14px;
+        }
+
+        h3 {
+            font-size: 12px;
+            color: #333;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        ul,
+        ol {
+            margin-left: 15px;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        .highlight {
+            background: #EBD3F1;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 11px;
+            border-radius: 8px;
+        }
+
+        .highlight strong {
+            color: rgb(47, 55, 38);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+            font-size: 10px;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        th {
+            background: rgb(47, 55, 38);
+            color: white;
+            padding: 6px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 6px;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .important {
+            background: #C2FF96;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 10px;
+            border-radius: 8px;
+        }
+
+        .important strong {
+            color: #110F0F;
+        }
+
+        .checkmark {
+            color: rgb(162, 215, 224);
+            font-weight: bold;
+        }
+
+        .footer {
+            padding-top: 5px;
+            margin-top: auto;
+            font-size: 9px;
+            color: #999;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+
+        .footer-disclaimer {
+            font-size: 7.5px;
+            color: #bbb;
+        }
+
+        .footer-page-num {
+            font-size: 14px;
+            color: #999;
+            font-weight: bold;
+        }
+
+        .no-bullets {
+            list-style: none;
+            list-style-type: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+
+        .no-bullets li {
+            margin-bottom: 4px;
+        }
+
+        strong {
+            color: rgb(47, 55, 38);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- COVER PAGE -->
+    <div class="cover"></div>
+
+    <!-- PAGE 1 -->
+    <div class="page">
+        <div class="header">
+            <h1>Making Tax Digital</h1>
+            <p class="subtitle">Quick Guide for Freelancers & Self-Employed</p>
+        </div>
+
+        <div class="content-body">
+            <h2>What is Making Tax Digital (MTD)?</h2>
+            <p><strong>From April 2026,</strong> if you earn <strong>£50,000+</strong> from self-employment or rental
+                income, you'll file tax updates <strong>every 3 months</strong> instead of once a year. From April 2027
+                this applies to those earning <strong>£30,000+</strong>.</p>
+
+            <div class="highlight">
+                <strong>Here's the thing:</strong> You're moving from 1 annual tax return to 5 submissions per year (4
+                quarterly updates + 1 year-end return). It sounds like a lot, but it's actually spreading the admin out
+                – less stressful than doing it all at once.
+            </div>
+
+            <h2>Who Needs to Use MTD?</h2>
+            <p><strong>You need MTD if your gross income is £50,000+ from:</strong></p>
+            <ul class="no-bullets">
+                <li><span class="checkmark">✓</span> Self-employment (sole trader)</li>
+                <li><span class="checkmark">✓</span> Rental income (landlord)</li>
+                <li><span class="checkmark">✓</span> A combination of both</li>
+            </ul>
+            <p><strong>Note:</strong> This is based on <strong>gross income</strong> (before expenses), not profit.</p>
+
+            <div style="break-after: column;"></div>
+
+            <h2>What You'll Need to Do</h2>
+            <h3>1️⃣ Get Digital Records Software</h3>
+            <p>Choose HMRC-approved software to track income & expenses. Free options are available.</p>
+
+            <h3>2️⃣ Submit Quarterly Updates</h3>
+            <p>Send your income & expenses every 3 months to HMRC (4 per tax year).</p>
+
+            <h3>3️⃣ File Year-End Return</h3>
+            <p>Submit your final tax return before 31 January (same as now).</p>
+
+            <h3>4️⃣ Pay Tax by 31 January</h3>
+            <p>Payment deadline stays the same – just more submissions beforehand.</p>
+
+            <h2>Software Options</h2>
+            <p><strong>Free options:</strong> Sage (limited features), Starling Bank, FreeAgent (with a Mettle Business
+                Account) and others</p>
+            <p><strong>Paid options:</strong> Xero (from £7/month), Untied (£130/year)</p>
+            <p style="font-size: 10px; margin-top: 10px;">Use
+                <strong>gov.uk/guidance/find-software-that-works-with-making-tax-digital-for-income-tax</strong> to find
+                the right tool for your needs.
+            </p>
+        </div>
+
+        <div class="footer">
+            <div class="footer-row">
+                <span>Making Tax Digital Quickstart Guide | Maybe Pay Me | June 2026</span>
+                <span class="footer-page-num">1</span>
+            </div>
+            <div class="footer-disclaimer">This guide is for informational purposes only and does not constitute
+                financial advice. Always seek professional guidance before making financial decisions — Maybe Pay Me
+                accepts no liability for actions taken based on this content.</div>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <div class="header">
+            <h1>Making Tax Digital</h1>
+            <p class="subtitle">Key Dates & Deadlines 📅</p>
+        </div>
+
+        <div class="content-body">
+            <h2>Critical Dates for 2026/27</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>What You Need to Do</th>
+                </tr>
+                <tr>
+                    <td><strong>6 April 2026</strong></td>
+                    <td>Start using MTD software to keep digital records</td>
+                </tr>
+                <tr>
+                    <td><strong>7 August 2026</strong></td>
+                    <td>1st Quarterly Update (April–July 2026)</td>
+                </tr>
+                <tr>
+                    <td><strong>7 November 2026</strong></td>
+                    <td>2nd Quarterly Update (April–October 2026)</td>
+                </tr>
+                <tr>
+                    <td><strong>7 February 2027</strong></td>
+                    <td>3rd Quarterly Update (April 2026–January 2027)</td>
+                </tr>
+                <tr>
+                    <td><strong>7 May 2027</strong></td>
+                    <td>4th Quarterly Update (full year April 2026–April 2027)</td>
+                </tr>
+                <tr>
+                    <td><strong>31 January 2028</strong></td>
+                    <td>Submit final tax return + pay your tax bill</td>
+                </tr>
+            </table>
+
+            <h2>Setting Up: Before first submission</h2>
+            <p><strong><span class="checkmark">✓</span> Create an HMRC Online Services account</strong> (or use your
+                existing one)</p>
+            <p><strong><span class="checkmark">✓</span> Choose & set up your software</strong> (allow time to import
+                records)</p>
+            <p><strong><span class="checkmark">✓</span> Set calendar reminders</strong> for all quarterly deadlines</p>
+            <p><strong><span class="checkmark">✓</span> Get familiar with your software</strong> (practice before your
+                first submission)
+            </p>
+
+            <h2>Late? Here's What Happens...</h2>
+
+            <h3>Late Quarterly Updates (2026/27)</h3>
+            <p>No penalties for being late with quarterly submissions in year one. However, you can still correct errors
+                before filing your final return.</p>
+
+            <h3>Late Tax Return or Payment</h3>
+            <ul>
+                <li><strong>Late submission:</strong> 1 penalty point per missed deadline (4 points = £200 fine)</li>
+                <li><strong>Late payment:</strong> Interest from day one (7.75%) + penalties (3% after 15 days, 6% after
+                    30 days)</li>
+            </ul>
+
+            <div class="important">
+                <strong>Good news:</strong> You get up to 30 days to pay or arrange a payment plan before penalties kick
+                in (normally 15 days). They're being lenient in year one – use that time to get organised.
+            </div>
+
+            <h2>Phased Roll-Out</h2>
+            <p>MTD starts with the highest earners. Timeline:</p>
+            <ul>
+                <li><strong>April 2026:</strong> Income £50,000+</li>
+                <li><strong>April 2027:</strong> Income £30,000+</li>
+                <li><strong>April 2028:</strong> Income £20,000+ (planned)</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <div class="footer-row">
+                <span>Making Tax Digital Quickstart Guide | Maybe Pay Me | June 2026</span>
+                <span class="footer-page-num">2</span>
+            </div>
+            <div class="footer-disclaimer">This guide is for informational purposes only and does not constitute
+                financial advice. Always seek professional guidance before making financial decisions — Maybe Pay Me
+                accepts no liability for actions taken based on this content.</div>
+        </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page">
+        <div class="header">
+            <h1>Making Tax Digital</h1>
+            <p class="subtitle">Your Questions Answered</p>
+        </div>
+
+        <div class="content-body">
+            <h2>FAQs</h2>
+
+            <h3>Can I opt out or delay?</h3>
+            <p><strong>Generally, no.</strong> If you meet the income threshold, you must use MTD. You can opt out if
+                your income drops below the threshold for 3 consecutive years.</p>
+
+            <h3>Will I pay more tax?</h3>
+            <p><strong>No.</strong> MTD doesn't change how much tax you owe – just how often you report it. Payment
+                deadlines stay the same (31 January).</p>
+
+            <h3>Can I get an exemption?</h3>
+            <p><strong>Only if you're "digitally excluded"</strong> (e.g., age, disability, no reliable internet). You
+                must apply to HMRC. Simply preferring paper returns won't qualify.</p>
+
+            <h3>What if I make a mistake on my quarterly update?</h3>
+            <p><strong>You can correct it</strong> in your software before submitting your final tax return. No penalty
+                if you fix it yourself.</p>
+
+            <h3>Do I need an accountant?</h3>
+            <p><strong>Not necessarily.</strong> Many freelancers can manage MTD with the right software. An accountant
+                can help if you find it overwhelming or have complex finances.</p>
+
+            <h3>What about my childcare allowance?</h3>
+            <p><strong>Changes coming:</strong> If you're a childminder using MTD, the old "wear and tear" allowance
+                ends. You'll now claim actual costs and apportion shared expenses.</p>
+
+            <h3>Can I combine my income streams?</h3>
+            <p><strong>Yes.</strong> If you're both self-employed and a landlord, combine gross income. They both count
+                toward the £50,000 threshold.</p>
+
+            <h2>Need Help? </h2>
+            <ul class="no-bullets">
+                <li><strong>📞 HMRC Helpline:</strong> 0300 200 3310</li>
+                <li><strong>🔍 Software Finder:</strong>
+                    gov.uk/guidance/find-software-that-works-with-making-tax-digital-for-income-tax</li>
+                <li><strong>🎥 Videos & Webinars:</strong> gov.uk/guidance/help-and-support-for-making-tax-digital</li>
+                <li><strong>🤝 TaxAid (for those with limited income):</strong> taxaid.org.uk</li>
+            </ul>
+
+            <h2>Quick Checklist</h2>
+            <p style="margin-bottom: 4px;"><strong>Before your first submission:</strong></p>
+            <ul class="no-bullets" style="margin-bottom: 12px;">
+                <li><span class="checkmark">☐</span> Check if you're eligible (gross income £50,000+?)</li>
+                <li><span class="checkmark">☐</span> Create HMRC Online Services account</li>
+                <li><span class="checkmark">☐</span> Choose & test software</li>
+                <li><span class="checkmark">☐</span> Gather all financial records</li>
+                <li><span class="checkmark">☐</span> Set calendar reminders for deadlines</li>
+            </ul>
+
+            <div class="highlight">
+                <strong>Pro tip:</strong> Start using your chosen software early. You'll be comfortable with it by April
+                and less likely to miss deadlines. Plus, you'll spot any record-keeping issues before they become
+                problems.
+            </div>
+
+            <h2>The Bottom Line</h2>
+            <p>MTD means more frequent submissions, but the same final payment deadline. Use the right software, stay
+                organised, and set reminders. Most freelancers find it manageable once they get going. 🎯</p>
+        </div>
+
+        <div class="footer">
+            <div class="footer-row">
+                <span>Making Tax Digital Quickstart Guide | Maybe Pay Me | June 2026</span>
+                <span class="footer-page-num">3</span>
+            </div>
+            <div class="footer-disclaimer">This guide is for informational purposes only and does not constitute
+                financial advice. Always seek professional guidance before making financial decisions — Maybe Pay Me
+                accepts no liability for actions taken based on this content.</div>
+        </div>
+    </div>
+
+    <!-- BACK COVER -->
+    <div class="back-cover">
+        <a class="bc-link-1" href="https://www.moneysavingexpert.com/family/making-tax-digital/" target="_blank"></a>
+        <a class="bc-link-2" href="https://www.freelancing.support/resources/hub/making-tax-digital"
+            target="_blank"></a>
+        <a class="bc-link-3" href="https://makingtaxdigital.campaign.gov.uk" target="_blank"></a>
+        <a class="bc-link-4" href="https://monzo.com/business-banking/learn/making-tax-digital-guide-for-beginners"
+            target="_blank"></a>
+    </div>
+
+</body>
+
+</html>

@@ -200,7 +200,7 @@
             cursor: pointer;
             transition: opacity 0.2s;
             text-decoration: none;
-            border-radius: 0px;
+            border-radius: 50px;
         }
 
         .card-btn:hover {
@@ -356,6 +356,110 @@
         .see-more-btn:hover {
             opacity: 0.8;
             transform: scale(1.02);
+        }
+
+        .download-btn {
+            background: var(--btn-color);
+            color: #110F0F;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .download-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.02);
+        }
+
+        /* --- MTD Banner --- */
+        .mtd-banner-wrapper {
+            padding: 0 60px;
+            box-sizing: border-box;
+            max-width: 1420px;
+            margin: 0 auto 120px;
+        }
+
+        .mtd-banner {
+            background-color: #9DD7E2;
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+            max-height: 300px;
+            border-radius: 20px;
+        }
+
+        .mtd-banner-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 50px 60px;
+            box-sizing: border-box;
+        }
+
+        .mtd-banner-text {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.35;
+            color: #110F0F;
+            text-align: left;
+            margin: 0;
+        }
+
+        .mtd-banner-text a {
+            color: #110F0F;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: opacity 0.2s;
+        }
+
+        .mtd-banner-text a:hover {
+            opacity: 0.65;
+        }
+
+        .mtd-banner-image {
+            flex: 0 0 36%;
+            max-width: 36%;
+            overflow: hidden;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .mtd-banner-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .mtd-banner-wrapper {
+                padding: 0 20px;
+            }
+
+            .mtd-banner {
+                flex-direction: column;
+                max-height: none;
+            }
+
+            .mtd-banner-image {
+                flex: 0 0 auto;
+                max-width: 100%;
+                max-height: 220px;
+            }
+
+            .mtd-banner-content {
+                padding: 30px 24px;
+            }
+
+            .mtd-banner-text {
+                font-size: 1.4rem;
+            }
         }
 
         /* --- FAQ Section --- */
@@ -815,6 +919,21 @@
         </div>
         <button class="see-more-btn">More to come</button>
     </section>
+
+    <!-- MTD Banner -->
+    <div class="mtd-banner-wrapper">
+        <div class="mtd-banner">
+            <div class="mtd-banner-content">
+                <p class="mtd-banner-text">
+                    Get our Making Tax Digital quick start guide<br>
+                    <a href="mtd_guide.html" target="_blank"><button class="download-btn">Download here</button></a>
+                </p>
+            </div>
+            <div class="mtd-banner-image">
+                <img src="assets/images/Frame 25.png" alt="Making Tax Digital quick start guide" />
+            </div>
+        </div>
+    </div>
 
     <!-- FAQ Section -->
     <section class="faq-section">
