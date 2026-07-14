@@ -1321,16 +1321,18 @@
         let rightWall = Bodies.rectangle(width + 50, height / 2, 100, height * 2, wallOptions);
         Composite.add(world, [floor, leftWall, rightWall]);
 
-        // --- Interaction ---
-        const mouse = Mouse.create(render.canvas);
-        const mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: { stiffness: 0.2, render: { visible: false } }
-        });
-        mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
-        mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
-        Composite.add(world, mouseConstraint);
-        render.mouse = mouse;
+        // --- Interaction (desktop only — preserves touch scroll on mobile) ---
+        if (!isMobile) {
+            const mouse = Mouse.create(render.canvas);
+            const mouseConstraint = MouseConstraint.create(engine, {
+                mouse: mouse,
+                constraint: { stiffness: 0.2, render: { visible: false } }
+            });
+            mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+            mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+            Composite.add(world, mouseConstraint);
+            render.mouse = mouse;
+        }
 
         // --- Render Loop (Dynamic Real-Time Text) ---
         Events.on(render, 'afterRender', function () {
