@@ -503,7 +503,7 @@
         }
 
         .faq-container {
-            max-width: 1024px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 0 60px;
             display: flex;
@@ -716,6 +716,42 @@
                 transform: scale(1);
                 width: 400px !important;
                 flex-shrink: 0;
+            }
+        }
+
+        /* Large Desktop — all 4 cards visible, centred */
+        @media (min-width: 1680px) {
+            .carousel-section {
+                max-width: 1680px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 0 60px;
+                box-sizing: border-box;
+            }
+
+            .swiper {
+                width: 100%;
+                overflow: hidden;
+            }
+
+            /* Override Swiper's JS-injected transform and width */
+            .swiper-wrapper {
+                transform: none !important;
+                width: 100% !important;
+                display: flex;
+                gap: 20px;
+            }
+
+            /* 4 cards, 3 gaps of 20px = 60px total gap */
+            .swiper-slide {
+                flex: 0 0 calc((100% - 60px) / 4) !important;
+                width: calc((100% - 60px) / 4) !important;
+                height: 450px !important;
+                margin: 0 !important;
+            }
+
+            .carousel-controls {
+                display: none;
             }
         }
 
