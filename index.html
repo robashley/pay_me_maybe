@@ -185,7 +185,7 @@
 
         .card-content h3 {
             margin: 0 0 15px 0;
-            font-size: 1.6rem;
+            font-size: 22px;
             letter-spacing: 0.45px;
             font-weight: 400;
             text-transform: capitalize;
@@ -221,7 +221,7 @@
         /* --- Hero Text --- */
         .hero-text {
             text-align: center;
-            padding: 375px 30px 80px 30px;
+            padding: 360px 30px 80px 30px;
         }
 
         .hero-text h1 {
@@ -234,7 +234,7 @@
 
         @media (min-width: 768px) {
             .hero-text h1 {
-                font-size: 40px;
+                font-size: 48px;
             }
         }
 
@@ -242,6 +242,18 @@
             font-size: 28px;
             font-weight: 400;
             margin: 0;
+        }
+
+        .subheading-text {
+            text-align: center;
+            padding: 0px 60px 0px 60px;
+        }
+
+        .subheading-text h2 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: #303827;
+            margin-bottom: 40px;
         }
 
         /* --- Carousel Controls --- */
@@ -337,7 +349,7 @@
             background: var(--bg-color);
             font-size: 12px;
             padding: 6px 12px;
-            border-radius: 4px;
+            border-radius: 6px;
             font-weight: 400;
             margin-bottom: 25px;
             color: #110F0F;
@@ -587,7 +599,7 @@
             width: 100%;
             background-color: var(--footer-bg);
             overflow: hidden;
-            height: 900px;
+            height: 800px;
             /* Desktop Height */
         }
 
@@ -784,7 +796,7 @@
             .carousel-section {
                 display: block;
                 min-height: auto;
-                padding: 40px 30px;
+                padding: 0px 30px 40px 30px;
             }
 
             .swiper {
@@ -844,7 +856,7 @@
             }
 
             .footer-wrapper {
-                height: 900px;
+                height: 800px;
             }
 
             .footer-content {
@@ -854,6 +866,7 @@
             .footer-header h2 {
                 font-size: 2.0rem;
             }
+
         }
     </style>
 </head>
@@ -875,10 +888,16 @@
 
     <!-- Hero Text Section -->
     <section class="hero-text">
-        <h1>Chasing payments is awkward. We make it easier</h1>
-        <p style=" font-weight: 300;">Free tools to help creative freelancers send payment reminders, calculate late
-            fees and follow up with
-            confidence.</p>
+        <h1>Chasing payments is awkward, <br> we make it easier</h1>
+        <p style=" font-weight: 300; font-size: 22px;">Free tools that help you chase payments, calculate late fees
+            and follow-up with confidence.</p>
+    </section>
+
+    <!-- Subheading Text Section -->
+    <section class="subheading-text">
+        <h2>Our tools</h2>
+        <!-- <p style=" font-weight: 300; font-size: 22px;">Free tools that help you chase payments, calculate late fees
+            and follow-up with confidence.</p> -->
     </section>
 
     <!-- Carousel Section -->
@@ -890,12 +909,11 @@
                     style="background-color: #EAC6E8; color: #110F0F; background-image: url('assets/images/Frame 25.png'); background-size: 368px 369px; background-repeat: no-repeat;">
                     <div class="card-content">
                         <div>
-                            <h3 style="color: #110F0F;">Late Fee Calculator</h3>
-                            <p style="color: #110F0F;">How much is that late invoice worth?
-                                Let's check.</p>
+                            <h3 style="color: #110F0F;">Late Payment Interest Calculator</h3>
+                            <p style="color: #110F0F;">Calculate interest & late payment fees</p>
                         </div>
                         <a href="tools/late_fee_calculator/late_fee_calculator.html"
-                            style="text-decoration:none;"><button class="card-btn">Try our late fee calculator
+                            style="text-decoration:none;"><button class="card-btn">Let’s calculate now
                             </button></a>
                     </div>
                 </div>
@@ -904,11 +922,11 @@
                     style="background-color: #A2D7E0; color: #110F0F; background-image: url('assets/images/Frame 26.png'); background-size: 368px 369px; background-repeat: no-repeat;">
                     <div class="card-content">
                         <div>
-                            <h3 style="color: #110F0F;">Due Date Calculator</h3>
-                            <p style="color: #110F0F;">The simplest way to find out figure out the due date.</p>
+                            <h3 style="color: #110F0F;">Invoice Due Date Calculator</h3>
+                            <p style="color: #110F0F;">Calculate the exact day your payment is due</p>
                         </div>
                         <a href="tools/invoice_due_date/invoice_due_date.html" style="text-decoration:none;"><button
-                                class="card-btn">Try our due date calculator</button></a>
+                                class="card-btn">Let’s calculate now</button></a>
                     </div>
                 </div>
                 <!-- Card 3 -->
@@ -916,11 +934,12 @@
                     style="background-color: #2F3726; color: #FFF; background-image: url('assets/images/Frame 24.png'); background-size: 368px 369px; background-repeat: no-repeat;">
                     <div class="card-content">
                         <div>
-                            <h3>Should I Take This?</h3>
-                            <p>The brutally honest decision engine for creatives.</p>
+                            <h3>Should I Take This Project? (Beta)</h3>
+                            <p>Get a clear-eyed view on potential projects</p>
                         </div>
                         <a href="https://ai.studio/apps/7be90348-d3cb-4834-b6b2-7f218fa4d431?fullscreenApplet=trueh"
-                            target="_blank" style="text-decoration:none;"><button class="card-btn">Try me</button></a>
+                            target="_blank" style="text-decoration:none;"><button class="card-btn">Try it
+                                here</button></a>
                     </div>
                 </div>
                 <!-- Card 4 -->
@@ -928,8 +947,8 @@
                     style="background-color: #EAC6E8; color: #110F0F; background-image: url('assets/images/Frame 27.png'); background-size: 368px 369px; background-repeat: no-repeat;">
                     <div class="card-content">
                         <div>
-                            <h3 style="color: #110F0F;">What else?</h3>
-                            <p style="color: #110F0F;">More tools in the works! Watch this space.</p>
+                            <h3 style="color: #110F0F;">Watch this space</h3>
+                            <p style="color: #110F0F;">More tools in the works!</p>
                         </div>
                         <button class="card-btn" style="cursor: default; opacity: 0.6;">Coming Soon</button>
                     </div>
@@ -980,17 +999,16 @@
                 </div>
             </a>
         </div>
-        <button class="see-more-btn">More to come</button>
+        <button class="see-more-btn" style="cursor: default; opacity: 0.6;">More to come</button>
     </section>
 
     <!-- MTD Banner -->
-    <div class="mtd-banner-wrapper">
+    <div class=" mtd-banner-wrapper">
         <div class="mtd-banner">
             <div class="mtd-banner-content">
                 <p class="mtd-banner-text">
-                    Get our Making Tax Digital quick start guide<br>
-                    <a href="mtd_guide.html" target="_blank"><button class="download-btn">Download our MTD guide
-                            here</button></a>
+                    Get our Making Tax Digital guide<br>
+                    <a href="mtd_guide.html" target="_blank"><button class="download-btn">Download here</button></a>
                 </p>
             </div>
             <div class="mtd-banner-image">
@@ -1010,11 +1028,12 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-panel">
-                    <p>Keep it simple but unignorable. You need: your business details, your client’s info, a
-                        clear
-                        breakdown of the services rendered, the total amount due, and your payment terms (like
-                        "Net
-                        14"). Oh, and your bank details—otherwise, they definitely won't pay you.
+                    <p>Keep it simple and clear. You need: your business details, your client’s info, a clear
+                        breakdown
+                        of the services rendered, the total amount due, and your payment terms (like 'Payment
+                        due within
+                        30 days') –
+                        and of course your bank details!
                     </p>
                 </div>
             </div>
@@ -1025,14 +1044,17 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-panel">
-                    <p>Yes! In the UK, if you are freelancing for another business (B2B), you are automatically
-                        protected by the Late Payment of Commercial Debts (Interest) Act 1998. Even if your
-                        contract is
-                        silent on late fees, the law says you have a statutory right to charge interest (8% plus
-                        the
-                        Bank of England base rate) and a fixed compensation fee. Try our <a
-                            href="tools/late_fee_calculator.html" target="_blank">late fee calculator</a> to see what
-                        you're owed.</p>
+                    <p>Yes! In the UK if you are freelancing for another business, you’re automatically
+                        protected by the
+                        Late Payment of Commercial Debts (Interest) Act 1998. Even if your contract is silent on
+                        late
+                        fees, the law says you have a statutory right to charge interest (8% plus the Bank of
+                        England
+                        base rate) and a fixed compensation fee. Try our <a href="tools/late_fee_calculator.html"
+                            target="_blank">late payment interest
+                            calculator</a> to see what
+                        you’re owed.
+                    </p>
                 </div>
             </div>
             <!-- FAQ Item 3 -->
@@ -1042,9 +1064,9 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-panel">
-                    <p>Ideally, yes. Writing "Payment due within 14 days" at the bottom removes the client’s
+                    <p>Ideally yes. Adding 'Payment due within 30 days' at the bottom removes the client's
                         ability to
-                        play dumb later. It turns a vague request for money into a binding deadline.</p>
+                        act dumb later.</p>
                 </div>
             </div>
             <!-- FAQ Item 4 -->
@@ -1054,13 +1076,13 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-panel">
-                    <p>Put them on your invoice, but more importantly, talk about them before you open a single
-                        creative
-                        file. Mention them in your initial proposal, contract, or kickoff email. Under UK law,
-                        late fees
-                        are much easier to enforce if the client explicitly agreed to the timeline before the
-                        work
-                        actually started.</p>
+                    <p>Put them on your invoice, but more importantly, talk about them before you open Figma
+                        (Illustrator, Final Cut Pro, Capture One — you get the drift). Mention them in your
+                        initial
+                        proposal,
+                        contract or kickoff email. Under UK law, late fees are much easier to enforce if the
+                        client
+                        explicitly agreed to the payment terms before the work actually started.</p>
                 </div>
             </div>
             <!-- FAQ Item 5 -->
@@ -1070,7 +1092,7 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-panel">
-                    <p>It shouldn't if handled professionally. It establishes you as a business, not a hobbyist.
+                    <p>It shouldn’t if handled professionally. It establishes you as a business, not a hobbyist.
                         Most
                         clients pay pretty swiftly once they see a late fee breakdown because it makes the
                         penalty objective and legally backed, rather than personal. Keep the tone firm but
@@ -1103,7 +1125,7 @@
                         administrative costs
                         of chasing a late invoice. The amount depends on the size of the debt: £40 for debts
                         under
-                        £1,000; £70 for debts up to £9,999.99; and £100 for debts £10,000 or more.
+                        £1,000 – £70 for debts up to £9,999.99 – and £100 for debts £10,000 or more.
                     </p>
                 </div>
             </div>
@@ -1140,7 +1162,7 @@
 
         <div class="footer-content">
             <div class="footer-header">
-                <h2>Making the struggle between the books and the art more bearable</h2>
+                <h2>Less admin, more time to create</h2>
             </div>
 
             <div class="footer-bottom"

@@ -43,8 +43,9 @@ body {
     border-radius: 20px;
     width: 100%;
     max-width: 380px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
     box-sizing: border-box;
+    margin-bottom: 1rem;
 }
 
 .input-group {
@@ -105,7 +106,7 @@ body {
     height: 24px;
 }
 
-.switch input { 
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
@@ -135,11 +136,11 @@ body {
     border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: #fff;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(22px);
     background-color: #BA9BF0;
 }
@@ -149,11 +150,12 @@ button.btn-primary {
     width: 100%;
     padding: 15px;
     border: none;
-    border-radius: 0px;
+    border-radius: 50px;
     font-size: 1rem;
     font-weight: 400;
     cursor: pointer;
-    margin-bottom: 20px; /* Space before result box */
+    margin-bottom: 20px;
+    /* Space before result box */
     background-color: #BA9BF0;
     color: #202124;
     transition: transform 0.1s, background-color 0.2s;
@@ -169,7 +171,8 @@ button.btn-primary:active {
 
 /* Result Box Styling */
 .result-box {
-    background-color: #FFFFF1; /* White/Cream box */
+    background-color: #FFFFF1;
+    /* White/Cream box */
     padding: 15px;
     border-radius: 12px;
     display: flex;
@@ -183,7 +186,8 @@ button.btn-primary:active {
     font-weight: 400;
     font-size: 1rem;
     color: #110F0F;
-    word-break: break-word; /* Ensure long dates don't break layout */
+    word-break: break-word;
+    /* Ensure long dates don't break layout */
 }
 
 .placeholder-text {
@@ -209,7 +213,8 @@ button.btn-primary:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0; /* Prevent shrinking if text is long */
+    flex-shrink: 0;
+    /* Prevent shrinking if text is long */
 }
 
 .copy-btn:hover {
@@ -255,12 +260,13 @@ button.btn-primary:active {
 
 /* Footer Disclaimer */
 .disclaimer {
-    margin-top: 50px;
-    font-size: 0.7rem;
-    color: #777;
+    font-size: 0.8125rem;
+    color: #888882;
     text-align: center;
     max-width: 600px;
-    line-height: 1.5;
+    line-height: 1.6;
+    font-weight: 300;
+    padding: 1rem 0 0;
 }
 
 /* Mobile Styles */
