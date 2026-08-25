@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Free IR35 take-home pay calculator for UK freelancers. Compare sole trader, limited company (inside vs outside IR35), and umbrella company take-home pay. Updated for 2026/27." />
+  <title>IR35 Take-Home Pay Calculator | Maybe Pay Me</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream: #FFFFF1;
+      --white: #FFFFFF;
+      --ink: #110F0F;
+      --ink-light: #555550;
+      --ink-muted: #888882;
+      --border: #E4E0D8;
+      --border-strong: #C8C3BA;
+      --accent: #2f3726;
+      --accent-bg: #ccb0e5;
+      --accent-border: #A8CCBA;
+      --warn: #7A4E1A;
+      --warn-bg: #FDF3E7;
+      --warn-border: #E8C88A;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-input: 30px;
+      --card-bg: #ebd3f1;
+      --btn-color: #C2FF96;
+    }
+
+    body {
+      font-family: 'Spline Sans', sans-serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .page-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 0px solid var(--border);
+      background: var(--cream);
+    }
+
+    .back-link {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .back-link-desktop {
+      color: var(--ink-light);
+      text-decoration: none;
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .back-link:hover {
+      color: #9DD7E2;
+    }
+
+    .back-link::before {
+      content: "←";
+    }
+
+    .back-link-mobile {
+      display: none;
+    }
+
+    .page-body {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .hero {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8125rem;
+      font-weight: 300;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 0px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-label {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink);
+      /* letter-spacing: 0.06em;
+      text-transform: uppercase; */
+      margin-bottom: 1rem;
+    }
+
+    /* Toggle pills */
+    .toggle-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .toggle-btn {
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--cream);
+      background: var(--white);
+      color: var(--ink-light);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .toggle-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+
+    /* Form fields */
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .field .hint {
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+      line-height: 1.4;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-prefix {
+      position: absolute;
+      left: 0.875rem;
+      font-size: 0.9375rem;
+      color: var(--ink-muted);
+      pointer-events: none;
+      font-weight: 400;
+    }
+
+    .input-wrap input[type="number"],
+    .input-wrap input[type="text"] {
+      width: 100%;
+      padding: 0.65rem 0.875rem 0.65rem 2rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 400;
+      border: 0px solid var(--border-strong);
+      border-radius: var(--radius-input);
+      background: var(--cream);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+      -moz-appearance: textfield;
+    }
+
+    .input-wrap input[type="number"]::-webkit-outer-spin-button,
+    .input-wrap input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--accent);
+    }
+
+    .input-wrap.no-prefix input {
+      padding-left: 0.875rem;
+    }
+
+    /* Fee type toggle (inline small) */
+    .fee-type-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .fee-type-row label {
+      margin: 0;
+    }
+
+    .pill-toggle {
+      display: flex;
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .pill-toggle button {
+      padding: 0.4rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 400;
+      border: none;
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+
+    .pill-toggle button.active {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    /* Inline note */
+    .inline-note {
+      display: flex;
+      gap: 0.6rem;
+      background: var(--accent-bg);
+      border: 0px solid var(--accent-border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      font-size: 0.8625rem;
+      color: var(--accent);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    .inline-note .note-icon {
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .warn-note {
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+      color: var(--warn);
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border-strong);
+      margin: 1.5rem 0;
+    }
+
+    /* CTA button */
+    .cta-btn {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--accent);
+      color: var(--white);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 400;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      margin-top: 0.25rem;
+    }
+
+    .cta-btn:hover {
+      opacity: 0.88;
+    }
+
+    .cta-btn:active {
+      opacity: 0.8;
+    }
+
+    /* Results */
+    #results {
+      display: none;
+    }
+
+    .result-card {
+      background: var(--white);
+      border: 1px solid var(--cream);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .result-header {
+      padding: 1.25rem 1.75rem;
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .result-header .result-label {
+      font-size: 0.8rem;
+      font-weight: 300;
+      opacity: 0.8;
+      margin-bottom: 0.25rem;
+    }
+
+    .result-header .result-amount {
+      font-size: 2.5rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+    }
+
+    .result-header .result-sub {
+      font-size: 0.875rem;
+      opacity: 0.75;
+      margin-top: 0.3rem;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-stat {
+      padding: 1rem 1.75rem;
+    }
+
+    .result-stat:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .result-stat .stat-label {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .result-stat .stat-value {
+      font-size: 1.25rem;
+      font-weight: 400;
+    }
+
+    /* Waterfall breakdown */
+    .breakdown {
+      padding: 1.25rem 1.75rem;
+    }
+
+    .breakdown-title {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      text-transform: none;
+      margin-bottom: 0.875rem;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      gap: 1rem;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-row .row-label {
+      color: var(--ink-light);
+      line-height: 1.4;
+    }
+
+    .breakdown-row .row-label .row-sub {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      margin-top: 0.1rem;
+    }
+
+    .breakdown-row .row-amount {
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .breakdown-row .row-amount.negative {
+      color: #d95f51;
+    }
+
+    .breakdown-row .row-amount.positive {
+      color: var(--accent);
+    }
+
+    .breakdown-row.total-row {
+      border-top: 1px solid var(--border-strong);
+      border-bottom: none;
+      margin-top: 0.25rem;
+      padding-top: 0.75rem;
+    }
+
+    .breakdown-row:has(+ .total-row) {
+      border-bottom: none;
+    }
+
+    .breakdown-row.total-row .row-label {
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .breakdown-row.total-row .row-amount {
+      font-size: 1.05rem;
+      color: var(--accent);
+    }
+
+    /* Comparison strip (Ltd Co) */
+    .comparison-strip {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .comparison-strip .strip-header {
+      padding: 1rem 1.75rem;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-strip .strip-title {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--ink-light);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .comparison-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .comparison-col {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .comparison-col:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .comparison-col .col-label {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .comparison-col .col-amount {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.15rem;
+    }
+
+    .comparison-col.winner .col-amount {
+      color: var(--accent);
+    }
+
+    .comparison-col .col-rate {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    .comparison-col .col-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.72rem;
+      font-weight: 400;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: var(--btn-color);
+      color: var(--accent);
+      margin-top: 1em;
+    }
+
+    .comparison-footer {
+      padding: 0.875rem 1.5rem;
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--ink-light);
+    }
+
+    .comparison-footer strong {
+      color: var(--ink);
+    }
+
+    /* Cost callout (umbrella) */
+    .cost-callout {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .cost-callout .callout-label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--warn);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .cost-callout .callout-amount {
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--warn);
+      margin-bottom: 0.3rem;
+    }
+
+    .cost-callout .callout-desc {
+      font-size: 0.875rem;
+      color: var(--warn);
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      font-size: 0.8125rem;
+      text-align: center;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      padding: 1rem 0 0;
+    }
+
+    .disclaimer a {
+      color: var(--accent);
+    }
+
+    /* Optional toggle */
+    .optional-toggle {
+      font-size: 0.8125rem;
+      color: var(--accent);
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .optional-toggle:hover {
+      text-decoration: underline;
+    }
+
+    .optional-section {
+      display: none;
+    }
+
+    .optional-section.open {
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+
+      .result-amount {
+        font-size: 2rem !important;
+      }
+
+      .comparison-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-col:first-child {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .result-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .result-stat:first-child {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .back-link-mobile {
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .back-link-mobile a {
+        text-decoration: none;
+      }
+
+      .back-link-desktop {
+        display: none;
+      }
+  </style>
+</head>
+
+<body>
+
+  <header class="page-header">
+    <a href="../../index.html" class="back-link-desktop">← Back</a>
+  </header>
+
+  <main class="page-body">
+
+    <div class="hero">
+      <p class="hero-eyebrow">Take-home pay calculator · 2026/27</p>
+      <h1>What do you actually take home? 💰</h1>
+      <p>Find out your real take-home pay. IR35 included, complex financial jargon definitely not.</p>
+    </div>
+
+    <div class="card">
+      <p class="section-label">What kind of freelancer are you?</p>
+      <div class="toggle-group" role="group" aria-label="Freelancer type">
+        <button class="toggle-btn active" data-type="sole" onclick="setType('sole')">Sole trader</button>
+        <button class="toggle-btn" data-type="ltd" onclick="setType('ltd')">Limited company</button>
+        <button class="toggle-btn" data-type="umbrella" onclick="setType('umbrella')">Umbrella company</button>
+      </div>
+
+      <!-- Sole trader note -->
+      <div id="sole-note" class="inline-note">
+        <span class="note-icon">💡</span>
+        <span>Good news — IR35 doesn't apply to sole traders. You're taxed on your profits through Self Assessment.
+          Simple.</span>
+      </div>
+
+      <!-- Ltd note -->
+      <div id="ltd-note" class="inline-note" style="display:none">
+        <span class="note-icon">💡</span>
+        <span>Working outside IR35? You take a salary + dividends through your company. Inside IR35? Your client deducts
+          tax before it reaches you. We'll show you both.</span>
+      </div>
+
+      <!-- Umbrella note -->
+      <div id="umbrella-note" class="inline-note warn-note" style="display:none">
+        <span class="note-icon">⚠️</span>
+        <span>Umbrella companies employ you, bill your client, then pay you as an employee. The umbrella fee is just the
+          start. Employer NI + Apprenticeship Levy on top is often the bigger shock. We'll show you exactly where it
+          goes.</span>
+      </div>
+
+      <!-- Shared fields -->
+      <div class="field">
+        <label id="day-rate-label" for="day-rate">Your Day Rate</label>
+        <div class="input-wrap">
+          <span class="input-prefix">£</span>
+          <input type="number" id="day-rate" min="0" placeholder="300" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="billable-days">Billable days per year</label>
+        <div class="hint">Not sure? 220 is a solid starting point after standard UK annual leave & bank holidays.</div>
+        <div class="input-wrap no-prefix">
+          <input type="number" id="billable-days" min="1" max="260" placeholder="220" />
+        </div>
+      </div>
+
+      <!-- Sole trader optional -->
+      <div id="sole-options">
+        <button class="optional-toggle" onclick="toggleOptional('sole-extra')">+ Add expenses (optional)</button>
+        <div id="sole-extra" class="optional-section">
+          <div class="field">
+            <label for="st-expenses">Annual business expenses</label>
+            <div class="hint">Things you spend to do the work; e.g. software, equipment, travel, home office. Reduces
+              your taxable profit.</div>
+            <div class="input-wrap">
+              <span class="input-prefix">£</span>
+              <input type="number" id="st-expenses" min="0" placeholder="3000" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ltd options -->
+      <div id="ltd-options" style="display:none">
+        <div class="field">
+          <label>IR35 status</label>
+          <div class="toggle-group" role="group" aria-label="IR35 status" style="margin-bottom:0">
+            <button class="toggle-btn active" data-ir35="outside" onclick="setIR35('outside')">Outside IR35</button>
+            <button class="toggle-btn" data-ir35="inside" onclick="setIR35('inside')">Inside IR35</button>
+          </div>
+        </div>
+        <button class="optional-toggle" onclick="toggleOptional('ltd-extra')">+ Add expenses (optional)</button>
+        <div id="ltd-extra" class="optional-section">
+          <div class="field">
+            <label for="ltd-expenses">Annual business expenses</label>
+            <div class="hint">Things you spend to do the work; software, equipment, travel, home office and other costs
+              claimed through the company. Reduces corporation tax.</div>
+            <div class="input-wrap">
+              <span class="input-prefix">£</span>
+              <input type="number" id="ltd-expenses" min="0" placeholder="3000" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Umbrella options -->
+      <div id="umbrella-options" style="display:none">
+        <div class="field">
+          <div class="fee-type-row">
+            <label>Umbrella fee</label>
+            <div class="pill-toggle" role="group" aria-label="Fee type">
+              <button class="active" id="fee-fixed-btn" onclick="setFeeType('fixed')">Fixed £</button>
+              <button id="fee-pct-btn" onclick="setFeeType('pct')">Percentage %</button>
+            </div>
+          </div>
+          <div class="hint">Check with your umbrella company, fees vary wildly. Most charge £15–25/week, some charge a
+            percentage.</div>
+          <div id="fee-fixed-field" class="input-wrap">
+            <span class="input-prefix">£</span>
+            <input type="number" id="umbrella-fee-fixed" min="0" placeholder="25" />
+          </div>
+          <div id="fee-pct-field" class="input-wrap" style="display:none">
+            <span class="input-prefix">%</span>
+            <input type="number" id="umbrella-fee-pct" min="0" max="20" step="0.1" placeholder="2" />
+          </div>
+          <div class="hint" style="margin-top:0.4rem" id="fee-hint-fixed">Per week (we'll work the annual rate out
+            for you)</div>
+          <div class="hint" style="margin-top:0.4rem; display:none" id="fee-hint-pct">Of your total contract value</div>
+        </div>
+        <button class="optional-toggle" onclick="toggleOptional('umbrella-extra')">+ Add pension contribution
+          (optional)</button>
+        <div id="umbrella-extra" class="optional-section">
+          <div class="field">
+            <label for="pension-pct">Pension contribution</label>
+            <div class="hint">Salary sacrifice into a pension reduces both your income tax and employee NI. It's worth
+              doing.
+            </div>
+            <div class="input-wrap">
+              <span class="input-prefix">%</span>
+              <input type="number" id="pension-pct" min="0" max="50" step="0.5" placeholder="5" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <hr class="divider" /> -->
+      <button class="cta-btn" onclick="calculate()">Calculate my take-home</button>
+    </div>
+
+    <!-- Results -->
+    <div id="results">
+
+      <!-- Sole trader results -->
+      <div id="results-sole" style="display:none">
+        <div class="result-card">
+          <div class="result-header">
+            <div class="result-label">Estimated annual take-home</div>
+            <div class="result-amount" id="st-takehome">£0</div>
+            <div class="result-sub" id="st-monthly">£0 / month</div>
+          </div>
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="stat-label">Effective tax rate</div>
+              <div class="stat-value" id="st-rate">0%</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-label">Gross contract value</div>
+              <div class="stat-value" id="st-gross">£0</div>
+            </div>
+          </div>
+          <div class="breakdown">
+            <div class="breakdown-title">Where it goes</div>
+            <div class="breakdown-row">
+              <span class="row-label">Contract value</span>
+              <span class="row-amount positive" id="st-b-revenue">£0</span>
+            </div>
+            <div class="breakdown-row" id="st-b-exp-row">
+              <span class="row-label">Business expenses</span>
+              <span class="row-amount negative" id="st-b-exp">−£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                Income tax
+                <span class="row-sub" id="st-b-tax-breakdown"></span>
+              </span>
+              <span class="row-amount negative" id="st-b-tax">−£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                National Insurance
+                <span class="row-sub">Class 2 + Class 4</span>
+              </span>
+              <span class="row-amount negative" id="st-b-ni">−£0</span>
+            </div>
+            <div class="breakdown-row total-row">
+              <span class="row-label">Your take-home</span>
+              <span class="row-amount" id="st-b-total">£0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ltd company results -->
+      <div id="results-ltd" style="display:none">
+        <!-- Side-by-side comparison -->
+        <div class="comparison-strip" id="ltd-comparison">
+          <div class="strip-header">
+            <div class="strip-title">Inside vs outside IR35 — your numbers</div>
+          </div>
+          <div class="comparison-cols">
+            <div class="comparison-col" id="outside-col">
+              <div class="col-label">Outside IR35</div>
+              <div class="col-amount" id="outside-amount">£0</div>
+              <div class="col-rate" id="outside-rate">0% effective tax</div>
+            </div>
+            <div class="comparison-col" id="inside-col">
+              <div class="col-label">Inside IR35</div>
+              <div class="col-amount" id="inside-amount">£0</div>
+              <div class="col-rate" id="inside-rate">0% effective tax</div>
+            </div>
+          </div>
+          <div class="comparison-footer" id="ltd-comparison-footer">
+            Working outside IR35 pays you <strong id="ltd-diff">£0</strong> more per year.
+          </div>
+        </div>
+
+        <!-- Detailed breakdown for selected status -->
+        <div class="result-card">
+          <div class="result-header">
+            <div class="result-label" id="ltd-result-label">Estimated annual take-home</div>
+            <div class="result-amount" id="ltd-takehome">£0</div>
+            <div class="result-sub" id="ltd-monthly">£0 / month</div>
+          </div>
+          <div class="breakdown">
+            <div class="breakdown-title" id="ltd-breakdown-title">Breakdown</div>
+            <div id="ltd-breakdown-rows"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Umbrella results -->
+      <div id="results-umbrella" style="display:none">
+
+        <div class="cost-callout">
+          <div class="callout-label">IR35 umbrella vs sole trader</div>
+          <div class="callout-amount" id="umb-cost">−£0</div>
+          <div class="callout-desc" id="umb-cost-desc">Doing the same days as a sole trader would net you roughly £0
+            more. That's the IR35 price tag.</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-header">
+            <div class="result-label">Estimated annual take-home</div>
+            <div class="result-amount" id="umb-takehome">£0</div>
+            <div class="result-sub" id="umb-monthly">£0 / month</div>
+          </div>
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="stat-label">Effective tax rate</div>
+              <div class="stat-value" id="umb-rate">0%</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-label">Gross contract value</div>
+              <div class="stat-value" id="umb-gross">£0</div>
+            </div>
+          </div>
+          <div class="breakdown">
+            <div class="breakdown-title">Where it goes</div>
+            <div class="breakdown-row">
+              <span class="row-label">Contract value</span>
+              <span class="row-amount positive" id="umb-b-revenue">£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                Umbrella fee
+                <span class="row-sub" id="umb-b-fee-sub"></span>
+              </span>
+              <span class="row-amount negative" id="umb-b-fee">−£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                Employer NI (15%)
+                <span class="row-sub">This comes out before you see a penny</span>
+              </span>
+              <span class="row-amount negative" id="umb-b-empni">−£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                Growth and Skills Levy (0.5%)
+                <span class="row-sub">Formerly the Apprenticeship Levy · your share of the umbrella's payroll
+                  liability</span>
+              </span>
+              <span class="row-amount negative" id="umb-b-gsl">−£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                Your gross salary
+                <span class="row-sub">What the umbrella actually pays you</span>
+              </span>
+              <span class="row-amount" id="umb-b-gross-sal">£0</span>
+            </div>
+            <div class="breakdown-row" id="umb-pension-row" style="display:none">
+              <span class="row-label">
+                Pension contribution
+                <span class="row-sub">Pre-tax · saves income tax + NI</span>
+              </span>
+              <span class="row-amount negative" id="umb-b-pension">−£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                Income tax
+                <span class="row-sub" id="umb-b-tax-breakdown"></span>
+              </span>
+              <span class="row-amount negative" id="umb-b-tax">−£0</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="row-label">
+                Employee NI
+                <span class="row-sub">8% up to £50,270 · 2% above</span>
+              </span>
+              <span class="row-amount negative" id="umb-b-empni2">−£0</span>
+            </div>
+            <div class="breakdown-row total-row">
+              <span class="row-label">Your take-home</span>
+              <span class="row-amount" id="umb-b-total">£0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        <strong>🔒 Privacy Note:</strong> We don't save your numbers.
+        All calculations happen locally in your browser, so your invoice secrets are safe with you.
+        <strong>Disclaimer:</strong> These are estimates based on 2026/27 UK tax rates. They assume no other income,
+        standard personal
+        allowance
+        (£12,570), and no Student Loan. For your actual situation, talk to an accountant. Not sure of your IR35 status?
+        <a href="https://www.gov.uk/guidance/check-employment-status-for-tax" target="_blank" rel="noopener">HMRC's CEST
+          tool</a> is a useful starting point.
+      </p>
+    </div>
+    <div class="back-link-mobile">
+      <a href="../../index.html" class="back-btn">← Back</a>
+    </div>
+  </main>
+
+  <script>
+    // ── Tax constants 2026/27 ──────────────────────────────────────────────
+    const PA = 12570;          // Personal allowance
+    const BR_LIMIT = 50270;    // Basic rate upper limit
+    const HR_LIMIT = 125140;   // Higher rate limit (taper starts at 100k)
+    const BR = 0.20;
+    const HR = 0.40;
+    const AR = 0.45;
+
+    // NI employee
+    const NI_PT = 12570;       // Primary threshold
+    const NI_UEL = 50270;      // Upper earnings limit
+    const NI_LOWER = 0.08;
+    const NI_UPPER = 0.02;
+
+    // NI employer
+    const EMP_NI_ST = 5000;    // Secondary threshold
+    const EMP_NI_RATE = 0.15;
+
+    // Growth and Skills Levy (formerly Apprenticeship Levy, renamed April 2025)
+    const GSL_RATE = 0.005;    // 0.5% of payroll subject to Employer NI
+
+    // Corp tax
+    const CT_SMALL = 0.19;     // Small profits rate (<£50k)
+    const CT_MAIN = 0.25;      // Main rate (>£250k)
+
+    // Dividend
+    const DIV_ALLOWANCE = 500;
+    const DIV_BASIC = 0.0875;
+    const DIV_HIGHER = 0.3375;
+    const DIV_ADD = 0.3935;
+
+    // Class 2 / 4 NI
+    const CL2_RATE_WEEKLY = 3.45;
+    const CL4_LOWER = 12570;
+    const CL4_UPPER = 50270;
+    const CL4_LOWER_RATE = 0.06;
+    const CL4_UPPER_RATE = 0.02;
+
+    // ── State ─────────────────────────────────────────────────────────────
+    let freelancerType = 'sole';
+    let ir35Status = 'outside';
+    let feeType = 'fixed';
+
+    function setType(t) {
+      freelancerType = t;
+      document.querySelectorAll('[data-type]').forEach(b => b.classList.toggle('active', b.dataset.type === t));
+      ['sole', 'ltd', 'umbrella'].forEach(k => {
+        document.getElementById(k + '-note').style.display = k === t ? '' : 'none';
+        const opts = document.getElementById(k + '-options');
+        if (opts) opts.style.display = k === t ? '' : 'none';
+      });
+      document.getElementById('day-rate-label').textContent = t === 'umbrella' ? 'Your Assignment Rate' : 'Your Day Rate';
+    }
+
+    function setIR35(s) {
+      ir35Status = s;
+      document.querySelectorAll('[data-ir35]').forEach(b => b.classList.toggle('active', b.dataset.ir35 === s));
+    }
+
+    function setFeeType(t) {
+      feeType = t;
+      document.getElementById('fee-fixed-btn').classList.toggle('active', t === 'fixed');
+      document.getElementById('fee-pct-btn').classList.toggle('active', t === 'pct');
+      document.getElementById('fee-fixed-field').style.display = t === 'fixed' ? '' : 'none';
+      document.getElementById('fee-pct-field').style.display = t === 'pct' ? '' : 'none';
+      document.getElementById('fee-hint-fixed').style.display = t === 'fixed' ? '' : 'none';
+      document.getElementById('fee-hint-pct').style.display = t === 'pct' ? '' : 'none';
+    }
+
+    function toggleOptional(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+      const btn = el.previousElementSibling;
+      btn.textContent = el.classList.contains('open')
+        ? btn.textContent.replace('+ Add', '− Remove')
+        : btn.textContent.replace('− Remove', '+ Add');
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────
+    function fmt(n) {
+      return '£' + Math.round(n).toLocaleString('en-GB');
+    }
+    function fmtNeg(n) {
+      return '−£' + Math.round(Math.abs(n)).toLocaleString('en-GB');
+    }
+    function pct(n, total) {
+      return total > 0 ? ((n / total) * 100).toFixed(1) + '%' : '0%';
+    }
+
+    function calcIncomeTax(taxable) {
+      if (taxable <= 0) return 0;
+      let tax = 0;
+      const adj = taxable > 100000 ? Math.min(taxable - 100000, PA * 2) / 2 : 0;
+      const effectivePA = Math.max(0, PA - adj);
+      const taxable2 = taxable - effectivePA;
+      if (taxable2 <= 0) return 0;
+      const basic = Math.min(taxable2, BR_LIMIT - PA);
+      tax += Math.max(0, basic) * BR;
+      const higher = Math.min(Math.max(0, taxable2 - (BR_LIMIT - PA)), HR_LIMIT - BR_LIMIT);
+      tax += higher * HR;
+      const add = Math.max(0, taxable2 - (HR_LIMIT - effectivePA));
+      tax += add * AR;
+      return tax;
+    }
+
+    function calcEmployeeNI(gross) {
+      if (gross <= NI_PT) return 0;
+      const lower = Math.min(gross, NI_UEL) - NI_PT;
+      const upper = Math.max(0, gross - NI_UEL);
+      return lower * NI_LOWER + upper * NI_UPPER;
+    }
+
+    function calcSoleTrader(revenue, expenses) {
+      const taxableProfit = Math.max(0, revenue - expenses);
+      const incomeTax = calcIncomeTax(taxableProfit);
+      const cl2 = taxableProfit > CL4_LOWER ? CL2_RATE_WEEKLY * 52 : 0;
+      const cl4Lower = Math.max(0, Math.min(taxableProfit, CL4_UPPER) - CL4_LOWER) * CL4_LOWER_RATE;
+      const cl4Upper = Math.max(0, taxableProfit - CL4_UPPER) * CL4_UPPER_RATE;
+      const ni = cl2 + cl4Lower + cl4Upper;
+      const takeHome = taxableProfit - incomeTax - ni;
+      return { revenue, expenses, taxableProfit, incomeTax, ni, takeHome };
+    }
+
+    function calcLtdOutside(revenue, expenses) {
+      const afterExp = Math.max(0, revenue - expenses);
+      const salary = Math.min(PA, afterExp);
+      const profit = Math.max(0, afterExp - salary);
+      const corpTax = profit * CT_SMALL;
+      const postTax = profit - corpTax;
+      const divTaxable = Math.max(0, postTax - DIV_ALLOWANCE);
+      const divInBasic = Math.min(divTaxable, BR_LIMIT - salary);
+      const divInHigher = Math.min(Math.max(0, divTaxable - (BR_LIMIT - salary)), HR_LIMIT - BR_LIMIT);
+      const divInAdd = Math.max(0, divTaxable - (HR_LIMIT - salary));
+      const divTax = divInBasic * DIV_BASIC + divInHigher * DIV_HIGHER + divInAdd * DIV_ADD;
+      const takeHome = salary + postTax - divTax;
+      return { revenue, expenses, salary, profit, corpTax, postTax, divTax, takeHome };
+    }
+
+    function calcLtdInside(revenue) {
+      const empNI = Math.max(0, revenue - EMP_NI_ST) * EMP_NI_RATE;
+      const grossSalary = revenue - empNI;
+      const incomeTax = calcIncomeTax(grossSalary);
+      const empNI2 = calcEmployeeNI(grossSalary);
+      const takeHome = grossSalary - incomeTax - empNI2;
+      return { revenue, empNI, grossSalary, incomeTax, empNI2, takeHome };
+    }
+
+    function calcUmbrella(revenue, annualFee, pensionPct) {
+      const postFee = Math.max(0, revenue - annualFee);
+      const empNI = Math.max(0, postFee - EMP_NI_ST) * EMP_NI_RATE;
+      const gsl = Math.max(0, postFee - EMP_NI_ST) * GSL_RATE;
+      const grossSalary = Math.max(0, postFee - empNI - gsl);
+      const pensionAmount = grossSalary * (pensionPct / 100);
+      const taxableGross = Math.max(0, grossSalary - pensionAmount);
+      const incomeTax = calcIncomeTax(taxableGross);
+      const empNI2 = calcEmployeeNI(taxableGross);
+      const takeHome = taxableGross - incomeTax - empNI2;
+      return { revenue, annualFee, postFee, empNI, gsl, grossSalary, pensionAmount, taxableGross, incomeTax, empNI2, takeHome };
+    }
+
+    function taxBreakdown(income) {
+      if (income <= PA) return 'Within personal allowance';
+      if (income <= BR_LIMIT) return '20% on earnings above £12,570';
+      if (income <= HR_LIMIT) return '20% basic + 40% higher rate';
+      return '20% + 40% + 45% additional rate';
+    }
+
+    // ── Main calculate ─────────────────────────────────────────────────────
+    function calculate() {
+      const dayRate = parseFloat(document.getElementById('day-rate').value) || 0;
+      const days = parseFloat(document.getElementById('billable-days').value) || 220;
+      const revenue = dayRate * days;
+
+      if (dayRate <= 0) {
+        alert('Please enter your day rate.');
+        return;
+      }
+
+      document.getElementById('results').style.display = 'block';
+      ['results-sole', 'results-ltd', 'results-umbrella'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      if (freelancerType === 'sole') {
+        const expenses = parseFloat(document.getElementById('st-expenses').value) || 0;
+        const r = calcSoleTrader(revenue, expenses);
+
+        document.getElementById('st-takehome').textContent = fmt(r.takeHome);
+        document.getElementById('st-monthly').textContent = fmt(r.takeHome / 12) + ' / month';
+        document.getElementById('st-rate').textContent = pct(revenue - r.takeHome, revenue);
+        document.getElementById('st-gross').textContent = fmt(revenue);
+
+        document.getElementById('st-b-revenue').textContent = fmt(r.revenue);
+        const expRow = document.getElementById('st-b-exp-row');
+        expRow.style.display = r.expenses > 0 ? '' : 'none';
+        document.getElementById('st-b-exp').textContent = fmtNeg(r.expenses);
+        document.getElementById('st-b-tax').textContent = fmtNeg(r.incomeTax);
+        document.getElementById('st-b-tax-breakdown').textContent = taxBreakdown(r.taxableProfit);
+        document.getElementById('st-b-ni').textContent = fmtNeg(r.ni);
+        document.getElementById('st-b-total').textContent = fmt(r.takeHome);
+
+        document.getElementById('results-sole').style.display = '';
+
+      } else if (freelancerType === 'ltd') {
+        const expenses = parseFloat(document.getElementById('ltd-expenses').value) || 0;
+        const outside = calcLtdOutside(revenue, expenses);
+        const inside = calcLtdInside(revenue);
+
+        // Comparison strip
+        const outsideWins = outside.takeHome >= inside.takeHome;
+        const diff = Math.abs(outside.takeHome - inside.takeHome);
+
+        document.getElementById('outside-amount').textContent = fmt(outside.takeHome);
+        document.getElementById('outside-rate').textContent = pct(revenue - outside.takeHome, revenue) + ' effective tax';
+        document.getElementById('inside-amount').textContent = fmt(inside.takeHome);
+        document.getElementById('inside-rate').textContent = pct(revenue - inside.takeHome, revenue) + ' effective tax';
+
+        const outsideCol = document.getElementById('outside-col');
+        const insideCol = document.getElementById('inside-col');
+        outsideCol.classList.toggle('winner', outsideWins);
+        insideCol.classList.toggle('winner', !outsideWins);
+
+        // Badges
+        outsideCol.querySelector('.col-badge') && outsideCol.querySelector('.col-badge').remove();
+        insideCol.querySelector('.col-badge') && insideCol.querySelector('.col-badge').remove();
+        if (outsideWins) {
+          const b = document.createElement('div');
+          b.className = 'col-badge';
+          b.textContent = 'Better outcome';
+          outsideCol.appendChild(b);
+        } else {
+          const b = document.createElement('div');
+          b.className = 'col-badge';
+          b.textContent = 'Better outcome';
+          insideCol.appendChild(b);
+        }
+
+        document.getElementById('ltd-comparison-footer').innerHTML = outsideWins
+          ? `Working outside IR35 pays you <strong>${fmt(diff)}</strong> more per year — an extra <strong>${fmt(diff / 12)}</strong> a month.`
+          : `In this scenario, inside IR35 pays you <strong>${fmt(diff)}</strong> more. That's unusual — double-check your figures.`;
+
+        // Detail breakdown for selected status
+        let r, label, rows;
+        if (ir35Status === 'outside') {
+          r = outside;
+          label = 'Outside IR35 — take-home breakdown';
+          rows = `
+          <div class="breakdown-row"><span class="row-label">Contract value</span><span class="row-amount positive">${fmt(r.revenue)}</span></div>
+          ${r.expenses > 0 ? `<div class="breakdown-row"><span class="row-label">Business expenses</span><span class="row-amount negative">${fmtNeg(r.expenses)}</span></div>` : ''}
+          <div class="breakdown-row"><span class="row-label">Salary <span class="row-sub">Set at personal allowance — tax efficient</span></span><span class="row-amount negative">${fmtNeg(r.salary)}</span></div>
+          <div class="breakdown-row"><span class="row-label">Corporation tax <span class="row-sub">19% small companies rate on company profit</span></span><span class="row-amount negative">${fmtNeg(r.corpTax)}</span></div>
+          <div class="breakdown-row"><span class="row-label">Dividend tax <span class="row-sub">On remaining post-tax profit</span></span><span class="row-amount negative">${fmtNeg(r.divTax)}</span></div>
+          <div class="breakdown-row total-row"><span class="row-label">Your take-home</span><span class="row-amount">${fmt(r.takeHome)}</span></div>`;
+        } else {
+          r = inside;
+          label = 'Inside IR35 — take-home breakdown';
+          rows = `
+          <div class="breakdown-row"><span class="row-label">Contract value</span><span class="row-amount positive">${fmt(r.revenue)}</span></div>
+          <div class="breakdown-row"><span class="row-label">Employer NI (15%) <span class="row-sub">Deducted before gross salary is set</span></span><span class="row-amount negative">${fmtNeg(r.empNI)}</span></div>
+          <div class="breakdown-row"><span class="row-label">Gross salary <span class="row-sub">Deemed salary under off-payroll rules</span></span><span class="row-amount">${fmt(r.grossSalary)}</span></div>
+          <div class="breakdown-row"><span class="row-label">Income tax <span class="row-sub">${taxBreakdown(r.grossSalary)}</span></span><span class="row-amount negative">${fmtNeg(r.incomeTax)}</span></div>
+          <div class="breakdown-row"><span class="row-label">Employee NI <span class="row-sub">8% up to £50,270 · 2% above</span></span><span class="row-amount negative">${fmtNeg(r.empNI2)}</span></div>
+          <div class="breakdown-row total-row"><span class="row-label">Your take-home</span><span class="row-amount">${fmt(r.takeHome)}</span></div>`;
+        }
+
+        document.getElementById('ltd-result-label').textContent = label;
+        document.getElementById('ltd-takehome').textContent = fmt(r.takeHome);
+        document.getElementById('ltd-monthly').textContent = fmt(r.takeHome / 12) + ' / month';
+        document.getElementById('ltd-breakdown-rows').innerHTML = rows;
+
+        document.getElementById('results-ltd').style.display = '';
+
+      } else {
+        // Umbrella
+        let annualFee = 0;
+        if (feeType === 'fixed') {
+          const weekly = parseFloat(document.getElementById('umbrella-fee-fixed').value) || 0;
+          annualFee = weekly * 52;
+        } else {
+          const feePct = parseFloat(document.getElementById('umbrella-fee-pct').value) || 0;
+          annualFee = revenue * (feePct / 100);
+        }
+        const pensionPct = parseFloat(document.getElementById('pension-pct').value) || 0;
+        const r = calcUmbrella(revenue, annualFee, pensionPct);
+
+        // Sole trader equivalent for comparison
+        const stEquiv = calcSoleTrader(revenue, 0);
+        const premium = stEquiv.takeHome - r.takeHome;
+
+        document.getElementById('umb-cost').textContent = fmtNeg(premium);
+        document.getElementById('umb-cost-desc').textContent = premium > 0
+          ? `Doing the same ${days} days as a sole trader would net you roughly ${fmt(stEquiv.takeHome)} — that's ${fmt(premium)} more. That's the IR35 price tag.`
+          : `Your umbrella arrangement is actually comparable to billing direct as a sole trader on these numbers.`;
+
+        document.getElementById('umb-takehome').textContent = fmt(r.takeHome);
+        document.getElementById('umb-monthly').textContent = fmt(r.takeHome / 12) + ' / month';
+        document.getElementById('umb-rate').textContent = pct(revenue - r.takeHome, revenue);
+        document.getElementById('umb-gross').textContent = fmt(revenue);
+
+        document.getElementById('umb-b-revenue').textContent = fmt(r.revenue);
+        document.getElementById('umb-b-fee').textContent = fmtNeg(r.annualFee);
+        document.getElementById('umb-b-fee-sub').textContent = feeType === 'fixed'
+          ? `£${Math.round(r.annualFee / 52)}/week × 52 weeks`
+          : `${document.getElementById('umbrella-fee-pct').value}% of contract value`;
+        document.getElementById('umb-b-empni').textContent = fmtNeg(r.empNI);
+        document.getElementById('umb-b-gsl').textContent = fmtNeg(r.gsl);
+        document.getElementById('umb-b-gross-sal').textContent = fmt(r.grossSalary);
+
+        const pensionRow = document.getElementById('umb-pension-row');
+        if (r.pensionAmount > 0) {
+          pensionRow.style.display = '';
+          document.getElementById('umb-b-pension').textContent = fmtNeg(r.pensionAmount);
+        } else {
+          pensionRow.style.display = 'none';
+        }
+
+        document.getElementById('umb-b-tax').textContent = fmtNeg(r.incomeTax);
+        document.getElementById('umb-b-tax-breakdown').textContent = taxBreakdown(r.taxableGross);
+        document.getElementById('umb-b-empni2').textContent = fmtNeg(r.empNI2);
+        document.getElementById('umb-b-total').textContent = fmt(r.takeHome);
+
+        document.getElementById('results-umbrella').style.display = '';
+      }
+    }
+  </script>
+
+</body>
+
+</html>
